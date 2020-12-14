@@ -21,4 +21,4 @@ async def hello(ctx):
 
 
 
-bot.run('Nzg4MTM5NjU3NzExNDUyMTkw.X9fKQQ.eL6JN2L0hjOz1b1yKCv5fzIgVFY')
+bot.run('<insert token>')
