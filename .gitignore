@@ -1,4 +1,5 @@
 # Don't track the content of these files
 *.env
 .env
-
+Barry/.env
+DuckBot/.env
