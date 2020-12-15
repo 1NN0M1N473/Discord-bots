@@ -1,2 +1,4 @@
 # Don't track the content of these files
+*.env
 .env
+
