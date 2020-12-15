@@ -1,6 +1,4 @@
-#My first discord bot
-#bear with me, code will be crude and probably stupid
-#I'm just learning shit
+#Leo's first discord bot
 
 #import libraries
 
