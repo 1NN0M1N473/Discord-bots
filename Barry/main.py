@@ -5,6 +5,8 @@
 #import libraries
 
 import os
+import requests
+import json
 import discord
 import random
 from discord.ext import commands
@@ -19,6 +21,15 @@ bot = commands.Bot(command_prefix='?')
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
+
+
+#functions
+
+def get_quote():
+    response = requests.get("https://zenquotes.io/api/random")
+    json_data = json.loads(response.text)
+    quote = json_data[0]["q"] + " -" + json_data[0]["a"]
+    return(quote)
 
 
 #initial event configuration
@@ -49,6 +60,11 @@ async def helpme(ctx):
 async def beeattack(ctx):
     await ctx.send("https://media.giphy.com/media/yIXVnzpoNiE0w/giphy.gif")
 
+@bot.command()
+async def quote(ctx):
+    quote = get_quote()
+    await ctx.send(quote)
+
 
 #bot events here
 
@@ -58,7 +74,7 @@ async def beeattack(ctx):
 #    await member.dm_channel.send(
 #	f'Hi {member.name}, welcome to the server!'
 #    )
-
+"""
 @bot.event
 async def on_message(message):
     if message.author == bot.user:
@@ -75,5 +91,5 @@ async def on_message(message):
     if message.content == 'syscraft':
         response = random.choice(syscraft_roast)
         await message.channel.send(response)
-
+"""
 bot.run(TOKEN)
