@@ -76,7 +76,7 @@ async def on_voice_state_update(member, before, after):
     if before.channel is None and after.channel is not None:
         if after.channel.id == 787743717393563698:
             channel = bot.get_channel(788226503422902343)
-            await channel.message.send("Test lol")
+            await client.send_message(message.channel, content = "Hello!")
 
 
 
