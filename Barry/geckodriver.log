@@ -1,0 +1,78 @@
+1608244757166	geckodriver	INFO	Listening on 127.0.0.1:47545
+1608244946071	geckodriver	INFO	Listening on 127.0.0.1:51195
+1608244947060	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-headless" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilem0nGkp"
+*** You are running in headless mode.
+
+(firefox:39979): GLib-GObject-WARNING **: 22:42:27.862: invalid (NULL) pointer instance
+
+(firefox:39979): GLib-GObject-CRITICAL **: 22:42:27.863: g_signal_connect_data: assertion 'G_TYPE_CHECK_INSTANCE (instance)' failed
+
+(/usr/lib/firefox/firefox:40071): GLib-GObject-WARNING **: 22:42:28.744: invalid (NULL) pointer instance
+
+(/usr/lib/firefox/firefox:40071): GLib-GObject-CRITICAL **: 22:42:28.744: g_signal_connect_data: assertion 'G_TYPE_CHECK_INSTANCE (instance)' failed
+
+(/usr/lib/firefox/firefox:40092): GLib-GObject-WARNING **: 22:42:29.026: invalid (NULL) pointer instance
+
+(/usr/lib/firefox/firefox:40092): GLib-GObject-CRITICAL **: 22:42:29.026: g_signal_connect_data: assertion 'G_TYPE_CHECK_INSTANCE (instance)' failed
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1608244951992	Marionette	INFO	Listening on port 41193
+1608244952046	Marionette	WARN	TLS certificate errors will be ignored for this session
+
+(/usr/lib/firefox/firefox:40156): GLib-GObject-WARNING **: 22:42:32.209: invalid (NULL) pointer instance
+
+(/usr/lib/firefox/firefox:40156): GLib-GObject-CRITICAL **: 22:42:32.209: g_signal_connect_data: assertion 'G_TYPE_CHECK_INSTANCE (instance)' failed
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: https://ad-cdn.technoratimedia.com/html/usersync.html?src=prebid_prebid_4.19.0, line 149: SecurityError: The operation is insecure.
+1608244982739	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript warning: https://pagead2.googlesyndication.com/bg/PbZvCEkorD5rxjWOexle1_regFmuc5-vrUA2zacPm4s.js line 1 > eval line 2385 > eval line 1 > eval, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://pagead2.googlesyndication.com/bg/PbZvCEkorD5rxjWOexle1_regFmuc5-vrUA2zacPm4s.js line 1 > eval line 2385 > eval line 1 > eval, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://pagead2.googlesyndication.com/bg/PbZvCEkorD5rxjWOexle1_regFmuc5-vrUA2zacPm4s.js line 1 > eval line 2023 > eval, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://pagead2.googlesyndication.com/bg/PbZvCEkorD5rxjWOexle1_regFmuc5-vrUA2zacPm4s.js line 1 > eval line 2023 > eval, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: https://ad-cdn.technoratimedia.com/html/usersync.html?src=prebid_prebid_4.19.0, line 149: SecurityError: The operation is insecure.
+JavaScript warning: https://pagead2.googlesyndication.com/bg/UBVKjIgL52oAupqoau5bmS4QFq3D8gEqQe5TpWWG23I.js line 1 > eval line 6731 > eval line 1 > eval, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://pagead2.googlesyndication.com/bg/UBVKjIgL52oAupqoau5bmS4QFq3D8gEqQe5TpWWG23I.js line 1 > eval line 6731 > eval line 1 > eval, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://pagead2.googlesyndication.com/bg/UBVKjIgL52oAupqoau5bmS4QFq3D8gEqQe5TpWWG23I.js line 1 > eval line 5726 > eval line 1 > eval, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://pagead2.googlesyndication.com/bg/UBVKjIgL52oAupqoau5bmS4QFq3D8gEqQe5TpWWG23I.js line 1 > eval line 5726 > eval line 1 > eval, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript error: https://ad-cdn.technoratimedia.com/html/usersync.html?src=prebid_prebid_4.19.0, line 149: SecurityError: The operation is insecure.
+JavaScript warning: https://z.moatads.com/maxpointdisplay83521080895/moatad.js#moatClientLevel1=Pepsico&moatClientLevel2=DewLoyaltyClub&moatClientLevel3=252310&moatClientLevel4=Mobile&moatClientSlicer1=Maxpoint&moatClientSlicer2=300x250, line 264: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/maxpointdisplay83521080895/moatad.js#moatClientLevel1=Pepsico&moatClientLevel2=DewLoyaltyClub&moatClientLevel3=252310&moatClientLevel4=Mobile&moatClientSlicer1=Maxpoint&moatClientSlicer2=300x250, line 264: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/maxpointdisplay83521080895/moatad.js#moatClientLevel1=Pepsico&moatClientLevel2=DewLoyaltyClub&moatClientLevel3=252310&moatClientLevel4=Mobile&moatClientSlicer1=Maxpoint&moatClientSlicer2=300x250, line 264: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/maxpointdisplay83521080895/moatad.js#moatClientLevel1=Pepsico&moatClientLevel2=DewLoyaltyClub&moatClientLevel3=252310&moatClientLevel4=Mobile&moatClientSlicer1=Maxpoint&moatClientSlicer2=300x250, line 264: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://pagead2.googlesyndication.com/bg/PbZvCEkorD5rxjWOexle1_regFmuc5-vrUA2zacPm4s.js line 1 > eval line 2911 > eval line 1 > eval, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://pagead2.googlesyndication.com/bg/PbZvCEkorD5rxjWOexle1_regFmuc5-vrUA2zacPm4s.js line 1 > eval line 2911 > eval line 1 > eval, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://pagead2.googlesyndication.com/bg/UBVKjIgL52oAupqoau5bmS4QFq3D8gEqQe5TpWWG23I.js line 1 > eval line 2797 > eval, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://pagead2.googlesyndication.com/bg/UBVKjIgL52oAupqoau5bmS4QFq3D8gEqQe5TpWWG23I.js line 1 > eval line 2797 > eval, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/maxpointdisplay83521080895/moatad.js#moatClientLevel1=Pepsico&moatClientLevel2=NakedRainbowMachine&moatClientLevel3=253541&moatClientLevel4=Mobile&moatClientSlicer1=Maxpoint&moatClientSlicer2=300x250, line 264: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/maxpointdisplay83521080895/moatad.js#moatClientLevel1=Pepsico&moatClientLevel2=NakedRainbowMachine&moatClientLevel3=253541&moatClientLevel4=Mobile&moatClientSlicer1=Maxpoint&moatClientSlicer2=300x250, line 264: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/maxpointdisplay83521080895/moatad.js#moatClientLevel1=Pepsico&moatClientLevel2=NakedRainbowMachine&moatClientLevel3=253541&moatClientLevel4=Mobile&moatClientSlicer1=Maxpoint&moatClientSlicer2=300x250, line 264: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/maxpointdisplay83521080895/moatad.js#moatClientLevel1=Pepsico&moatClientLevel2=NakedRainbowMachine&moatClientLevel3=253541&moatClientLevel4=Mobile&moatClientSlicer1=Maxpoint&moatClientSlicer2=300x250, line 264: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript error: https://ad-cdn.technoratimedia.com/html/usersync.html?src=prebid_prebid_4.19.0, line 149: SecurityError: The operation is insecure.
+JavaScript warning: https://pagead2.googlesyndication.com/bg/PbZvCEkorD5rxjWOexle1_regFmuc5-vrUA2zacPm4s.js line 1 > eval line 7714 > eval, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://pagead2.googlesyndication.com/bg/PbZvCEkorD5rxjWOexle1_regFmuc5-vrUA2zacPm4s.js line 1 > eval line 7714 > eval, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://pagead2.googlesyndication.com/bg/PbZvCEkorD5rxjWOexle1_regFmuc5-vrUA2zacPm4s.js line 1 > eval line 7724 > eval, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://pagead2.googlesyndication.com/bg/PbZvCEkorD5rxjWOexle1_regFmuc5-vrUA2zacPm4s.js line 1 > eval line 7724 > eval, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.

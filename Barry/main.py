@@ -8,13 +8,15 @@ import os
 import requests
 import json
 import discord
+import cleverbotfreeapi
 import random
 from discord.ext import commands
 from dotenv import load_dotenv
 
+
 #client for events, bot for commands
 bot = commands.Bot(command_prefix='?')
-
+#cb = cleverbot.CleverBot()
 
 #Create more secure function so I can push to GitHub without compromising the token
 #remember to add this in .gitignore
@@ -30,7 +32,6 @@ def get_quote():
     json_data = json.loads(response.text)
     quote = json_data[0]["q"] + " -" + json_data[0]["a"]
     return(quote)
-
 
 #initial event configuration
 
@@ -65,8 +66,13 @@ async def quote(ctx):
     quote = get_quote()
     await ctx.send(quote)
 
+@bot.command()
+async def barry(ctx, *, input):
+    response = cleverbotfreeapi.cleverbot(input)
+    await ctx.send(response)
 
 #bot events here
+
 
 #@bot.event
 #async def on_member_join(member):
