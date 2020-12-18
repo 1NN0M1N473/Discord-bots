@@ -1,20 +1,24 @@
-#My first discord bot
-#bear with me, code will be crude and probably stupid
-#I'm just learning shit
+#########################
+######## BARRY ##########
+########################
 
-#import libraries
+
+### IMPORT LIBRARIES ###
 
 import os
 import requests
 import json
+import typing
 import discord
+import discord.channel
 import cleverbotfreeapi
 import random
 from discord.ext import commands
 from dotenv import load_dotenv
 
 
-#client for events, bot for commands
+
+### SET PREFIX, VARIABLES, and TOKEN ###
 bot = commands.Bot(command_prefix='?')
 #cb = cleverbot.CleverBot()
 
@@ -25,7 +29,7 @@ load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
 
-#functions
+### FUNCTIONS ###
 
 def get_quote():
     response = requests.get("https://zenquotes.io/api/random")
@@ -33,69 +37,66 @@ def get_quote():
     quote = json_data[0]["q"] + " -" + json_data[0]["a"]
     return(quote)
 
-#initial event configuration
 
+
+### EVENTS ###
+
+#startup recognition
 @bot.event
 async def on_ready():
     print("Bot is online and ready to go!")
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name='?help'))
 
-#bot commands here
-
-@bot.command()
-async def ping(ctx):
-    await ctx.send(f'{round (bot.latency * 1000)}ms ')
-
-@bot.command()
-async def inspireme(ctx):
-    responses = open('jokes.txt').read().splitlines()
-    random.seed(a=None)
-    response = random.choice(responses)
-    await ctx.send(response)
-
-@bot.command()
-async def helpme(ctx):
-    await ctx.send("Calling FBI")
-
-@bot.command()
-async def beeattack(ctx):
-    await ctx.send("https://media.giphy.com/media/yIXVnzpoNiE0w/giphy.gif")
-
-@bot.command()
-async def quote(ctx):
-    quote = get_quote()
-    await ctx.send(quote)
-
-@bot.command()
-async def barry(ctx, *, input):
-    response = cleverbotfreeapi.cleverbot(input)
-    await ctx.send(response)
-
-#bot events here
-
-
+#voice-channel-update
+@bot.event
+async def on_voice_state_update(member, before, after):
+    if before.channel is None and after.channel is not None:
+        if after.channel.id == 787743717393563698:
+            textchannel = bot.get_channel(789521865513107546)
+            await textchannel.send('Test message sent to <@645083460658003969>')
+#welcome message, disabled for now
 #@bot.event
 #async def on_member_join(member):
 #    await member.create_dm()
 #    await member.dm_channel.send(
 #	f'Hi {member.name}, welcome to the server!'
 #    )
-"""
-@bot.event
-async def on_message(message):
-    if message.author == bot.user:
-        return
 
-    syscraft_roast = [
-	'I eat Syscraft for breakfast',
-	'We don\'t say that name here',
-	'Who\'s this syscraft person?',
-	'I\'ll kill a syscraft. I ain\'t saying I have, and I  ain\'t saying I haven\'t.',
-	'Barry > Syscraft'
-    ]
 
-    if message.content == 'syscraft':
-        response = random.choice(syscraft_roast)
-        await message.channel.send(response)
-"""
+### COMMANDS ###
+
+#measures latency
+@bot.command()
+async def ping(ctx):
+    await ctx.send("It takes a packet " + f'{round (bot.latency * 1000)}ms ' + " to reach your device from the server.")
+
+#nerdy quote
+@bot.command()
+async def nerdyquote(ctx):
+    responses = open('jokes.txt').read().splitlines()
+    random.seed(a=None)
+    response = random.choice(responses)
+    await ctx.send(response)
+
+#attack with bees
+@bot.command()
+async def beeattack(ctx):
+    await ctx.send("https://media.giphy.com/media/yIXVnzpoNiE0w/giphy.gif")
+
+#inspirational quote
+@bot.command()
+async def quote(ctx):
+    quote = get_quote()
+    await ctx.send(quote)
+
+#chat with barry
+@bot.command()
+async def barry(ctx, *, input):
+    response = cleverbotfreeapi.cleverbot(input)
+    await ctx.send(response)
+
+
+
+### RUN BOT ###
+
 bot.run(TOKEN)
