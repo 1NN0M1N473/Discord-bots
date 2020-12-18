@@ -48,12 +48,13 @@ async def on_ready():
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name='?help'))
 
 #voice-channel-update
-@bot.event
+#currently a non-function, testing voice channel activity notifications
+""" @bot.event
 async def on_voice_state_update(member, before, after):
     if before.channel is None and after.channel is not None:
         if after.channel.id == 787743717393563698:
             textchannel = bot.get_channel(789521865513107546)
-            await textchannel.send('Test message sent to <@645083460658003969>')
+            await textchannel.send('Test message sent to <@645083460658003969>') """
 #welcome message, disabled for now
 #@bot.event
 #async def on_member_join(member):
