@@ -103,7 +103,7 @@ bot.remove_command('help')
 @bot.command()
 async def help(ctx, argument: typing.Optional[str] = "None"):
 
-    if (argument = "None"):
+    if (argument == "None"):
 
         embed = discord.Embed(title='Barry help', description=("Hi there {}! Here are the commands you can use with this bot:".format(ctx.message.author.mention)), color = 0x00FFFF)
 
@@ -119,8 +119,8 @@ async def help(ctx, argument: typing.Optional[str] = "None"):
 
         await ctx.send(embed=embed)
 
-    else:
-        if (argument == "commands"):
+
+    elif(argument == "commands"):
 
             embed = discord.Embed(title='Barry help', description=("Hi there {}! Here are the commands you can use with this bot:".format(ctx.message.author.mention)), color = 0x00FFFF)
 
