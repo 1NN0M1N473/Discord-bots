@@ -10,6 +10,7 @@ import random
 import typing
 import discord
 import requests
+import cleverbotfreeapi
 import discord.client
 import discord.channel
 from random import randint
@@ -29,7 +30,7 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 
 @bot.event
 async def on_ready():
-    print ("Bot Onine!")
+    print ("Bot Online!")
     print ("Hello I Am " + bot.user.name)
     print ('-----------')
 
@@ -115,6 +116,13 @@ async def inspireme(ctx):
 
         await ctx.send('Inspirobot is broken, there is no reason to live.')
 
+
+### CHATBOT ###
+# summons the cleverbot API to hold a conversation for those who have no life
+@bot.command()
+async def duckbot(ctx, *, input):
+    response = cleverbotfreeapi.cleverbot(input)
+    await ctx.send(response)
 ### YOUR PING ###
 # Tells your ping
 
