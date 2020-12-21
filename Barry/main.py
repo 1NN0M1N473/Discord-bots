@@ -15,11 +15,13 @@ import cleverbotfreeapi
 import random
 from discord.ext import commands
 from dotenv import load_dotenv
-
+from discord_slash import SlashCommand
+from discord_slash.model import SlashContext
 
 
 ### SET PREFIX, VARIABLES, and TOKEN ###
-bot = commands.Bot(command_prefix='?')
+bot = commands.Bot(command_prefix=commands.when_mentioned_or('?'), case_insensitive=True, intents=discord.Intents.all())
+slash = SlashCommand(bot)
 #cb = cleverbot.CleverBot()
 
 #Create more secure function so I can push to GitHub without compromising the token
@@ -49,12 +51,12 @@ async def on_ready():
 
 #voice-channel-update
 #currently a non-function, testing voice channel activity notifications
-""" @bot.event
+@bot.event
 async def on_voice_state_update(member, before, after):
     if before.channel is None and after.channel is not None:
         if after.channel.id == 787743717393563698:
             textchannel = bot.get_channel(789521865513107546)
-            await textchannel.send('Test message sent to <@645083460658003969>') """
+            await textchannel.send('Test message sent to <@645083460658003969>')
 #welcome message, disabled for now
 #@bot.event
 #async def on_member_join(member):
@@ -96,6 +98,10 @@ async def barry(ctx, *, input):
     response = cleverbotfreeapi.cleverbot(input)
     await ctx.send(response)
 
+@slash.slash(name="test")
+async def _test(ctx: SlashContext):
+    embed = discord.Embed(title="embed test")
+    await ctx.send(content="test", embeds=[embed])
 
 ### HELP COMMAND ###
 
