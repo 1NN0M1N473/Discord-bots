@@ -96,7 +96,7 @@ async def quote(ctx):
 @bot.command()
 async def barry(ctx, *, input):
     response = cleverbotfreeapi.cleverbot(input)
-    await ctx.send(response + "-?-")
+    await ctx.send(response + "     -?-")
 
 @slash.slash(name="test")
 async def _test(ctx: SlashContext):
