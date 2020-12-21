@@ -122,7 +122,7 @@ async def inspireme(ctx):
 @bot.command()
 async def duckbot(ctx, *, input):
     response = cleverbotfreeapi.cleverbot(input)
-    await ctx.send(response)
+    await ctx.send(response + "-!-")
 ### YOUR PING ###
 # Tells your ping
 
