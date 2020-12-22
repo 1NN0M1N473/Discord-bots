@@ -44,11 +44,15 @@ def get_aff():
     affirm = json_data["affirmation"]
     return(affirm)
 
+##### GET DOG
+
 def dog_img():
     response = requests.get("https://dog.ceo/api/breeds/image/random")
     json_data = json.loads(response.text)
     doggo = json_data["message"]
     return(doggo)
+
+##### GET CAT
 
 def cat_img():
     response = requests.get("https://aws.random.cat/meow")
@@ -58,6 +62,8 @@ def cat_img():
 
 ####### EVENTS #######
 
+##### JOINPING
+
 @bot.event
 async def on_voice_state_update(member, before, after):
     if before.channel is None and after.channel is not None:
@@ -65,12 +71,32 @@ async def on_voice_state_update(member, before, after):
             textchannel = bot.get_channel(788226503422902343)
             await textchannel.send('Hey <@349373972103561218>, Someone joined a voice channel!')
 
-###### COMMANDS #####
+##### BEE reaction 🇽 🇩
 
-### AFFIRMATION ###
+@bot.event
+async def on_message(message):
+    if 'bee' in message.content.lower():
+        await message.add_reaction('🐝')
+    if 'xd' in message.content.lower():
+        await message.add_reaction('🇽')
+        await message.add_reaction('🇩')
+    if 'lmao' in message.content.lower():
+        await message.add_reaction('🇱')
+        await message.add_reaction('🇲')
+        await message.add_reaction('🇦')
+        await message.add_reaction('🇴')
+    await bot.process_commands(message)
 
-@bot.command(aliases=['inspirequote', 'quote', 'inspire'])
-async def affirmation(ctx):
+
+############################
+######### COMMANDS #########
+############################
+
+### motivate ###
+# random motivational quotes
+
+@bot.command(aliases=['inspirequote', 'quote', 'inspire', 'motivateme'])
+async def motivate(ctx):
     affirm = get_aff()
     await ctx.send(affirm)
 
@@ -106,26 +132,23 @@ async def inspireme(ctx):
         params = {'generate' : 'true'}
         response = requests.get(url, params, timeout=10)
         image = response.text
-        embed2 = discord.Embed(title='An inspirational image...', color=random.randint(0, 0xFFFFFF))
-        embed2.set_image(url=image)
-        embed2.set_footer(text='by inspirobot.me', icon_url='https://inspirobot.me/website/images/inspirobot-dark-green.png')
-
-        await ctx.send(embed=embed2)
-
+        embed = discord.Embed(title='An inspirational image...', color=random.randint(0, 0xFFFFFF))
+        embed.set_image(url=image)
+        embed.set_footer(text='by inspirobot.me', icon_url='https://inspirobot.me/website/images/inspirobot-dark-green.png')
+        await ctx.send(embed=embed)
     except RequestException:
-
         await ctx.send('Inspirobot is broken, there is no reason to live.')
 
 
 ### CHATBOT ###
 # summons the cleverbot API to hold a conversation for those who have no life
-@bot.command()
+@bot.command(aliases=['duck', 'db', 'cleverbot', 'r'])
 async def duckbot(ctx, *, input):
     response = cleverbotfreeapi.cleverbot(input)
     await ctx.send(response)
 
 ### YOUR PING ###
-# Tells your ping
+# Tells your ping to the server
 
 @bot.command()
 async def ping(ctx):
@@ -135,11 +158,15 @@ async def ping(ctx):
 ########## TEST ##########
 ##########################
 
+
 @bot.command(pass_context=True)
 async def name(ctx):
     await ctx.send("{}".format(ctx.message.author.mention))
 
-#########
+######### MyID commands
+# Test permissons
+# test adding reactions
+
 
 @bot.command()
 async def myid(ctx):
@@ -148,13 +175,16 @@ async def myid(ctx):
     else:
         await ctx.message.add_reaction('❌')
 
-#########
+######### Foo command
+# idfk why this here
 
 @bot.command()
 async def foo(ctx, arg):
     await ctx.send(arg)
 
 #########
+# Role color == embed color
+
 @bot.command()
 async def embedcolor(ctx):
     embed = discord.Embed(title='TEST', description='COLOR TEST', color = ctx.me.color)
@@ -188,7 +218,7 @@ async def help(ctx, argument: typing.Optional[str] = "None"):
         embed.add_field(name='_ _', value='_ _', inline=False)
         embed.add_field(name='.dog', value='Gets a random picture of a dog', inline=False)
         embed.add_field(name='.cat', value='Gets a random picture of a cat', inline=False)
-        embed.add_field(name='.affirmation', value='Sends an affirmation', inline=False)
+        embed.add_field(name='.motivateme', value='Sends an affirmation', inline=False)
         embed.add_field(name='.inspireme', value='Returns an AI generated image from Inspirobot.me', inline=False)
         embed.add_field(name='.ping', value="Shwos the bot's ping to the server", inline=False)
         embed.add_field(name='.help', value='Gives a list of arguments', inline=False)
@@ -214,6 +244,33 @@ async def help(ctx, argument: typing.Optional[str] = "None"):
 
         embed = discord.Embed(title='DuckBot help', description='Incorrect argument. type `.help` for a list of available arguments', color = 0x6c3e82)
         await ctx.send(embed=embed)
+
+
+
+
+
+
+#########################################################################
+#########################################################################
+#########################################################################
+
+@bot.command()
+@commands.has_permissions(administrator=True)
+async def test(ctx):
+    await ctx.send('You are an admin :grin:')
+
+@test.error
+async def test_error(ctx, error):
+    if isinstance(error, commands.CheckFailure):
+        await ctx.message.add_reaction('🚫')
+
+#########################################################################
+#########################################################################
+#########################################################################
+
+
+
+
 
 ####### RUN #######
 
