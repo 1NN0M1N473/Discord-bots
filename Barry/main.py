@@ -50,18 +50,6 @@ async def on_ready():
     print("Bot is online and ready to go!")
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name='Da hecc you lookin at??'))
 
-@bot.event
-async def on_message(message):
-    if 'nom' in message.content.lower():
-        await message.add_reaction('<:bot:778343738048774164>')
-    if 'n0m' in message.content.lower():
-        await message.add_reaction('<:bot:778343738048774164>')
-    if 'fel' in message.content.lower():
-        await message.add_reaction('<:barry:791049970290917426>')
-    #if message.guild.me in message.mentions:
-    #    await message.add_reaction('<:AngryPing:791053518375092354>')
-    await bot.process_commands(message)
-
 #voice-channel-update
 #currently a non-function, testing voice channel activity notifications
 """ @bot.event
