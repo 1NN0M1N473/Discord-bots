@@ -48,7 +48,7 @@ def get_quote():
 @bot.event
 async def on_ready():
     print("Bot is online and ready to go!")
-    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name='?help'))
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name='Da hecc you lookin at??'))
 
 @bot.event
 async def on_message(message):
