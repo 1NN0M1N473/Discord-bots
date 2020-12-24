@@ -17,6 +17,7 @@ from discord.ext import commands
 from dotenv import load_dotenv
 from discord_slash import SlashCommand
 from discord_slash.model import SlashContext
+from googlesearch import search
 
 
 ### SET PREFIX, VARIABLES, and TOKEN ###
@@ -49,14 +50,26 @@ async def on_ready():
     print("Bot is online and ready to go!")
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name='?help'))
 
+@bot.event
+async def on_message(message):
+    if 'nom' in message.content.lower():
+        await message.add_reaction('<:bot:778343738048774164>')
+    if 'n0m' in message.content.lower():
+        await message.add_reaction('<:bot:778343738048774164>')
+    if 'fel' in message.content.lower():
+        await message.add_reaction('<:barry:791049970290917426>')
+    #if message.guild.me in message.mentions:
+    #    await message.add_reaction('<:AngryPing:791053518375092354>')
+    await bot.process_commands(message)
+
 #voice-channel-update
 #currently a non-function, testing voice channel activity notifications
-@bot.event
+""" @bot.event
 async def on_voice_state_update(member, before, after):
     if before.channel is None and after.channel is not None:
         if after.channel.id == 787743717393563698:
             textchannel = bot.get_channel(789521865513107546)
-            await textchannel.send('Test message sent to <@645083460658003969>')
+            await textchannel.send('Hey <@645083460658003969>, someone joined the voice channel lol') """
 #welcome message, disabled for now
 #@bot.event
 #async def on_member_join(member):
@@ -67,6 +80,13 @@ async def on_voice_state_update(member, before, after):
 
 
 ### COMMANDS ###
+
+#mouthpiece of Sauron
+@bot.command()
+async def say(ctx, *, input):
+    await ctx.message.delete()
+    await ctx.send(input)
+
 
 #measures latency
 @bot.command()
@@ -98,11 +118,28 @@ async def barry(ctx, *, input):
     response = cleverbotfreeapi.cleverbot(input)
     await ctx.send(response)
 
-@slash.slash(name="test")
-async def _test(ctx: SlashContext):
-    embed = discord.Embed(title="embed test")
-    await ctx.send(content="test", embeds=[embed])
+#google search
+@bot.command()
+async def google(ctx, *, query):
+    author = ctx.author.mention
+    await ctx.channel.send(f"Here is the number one result for that query {author}!")
+    async with ctx.typing():
+        for j in search(query, tld="co.in", num=1, stop=1, pause=2):
+            print("User searched for " + query + " and got " + j)
+    await ctx.send(j)
 
+#Bot info
+@bot.command()
+async def info(ctx):
+    embed = discord.Embed(title='Information about Barry', description="Here's some information about me", color=ctx.me.color)
+
+    embed.add_field(name='Creator', value='1NN0M1N473#1337', inline=False)
+
+    embed.add_field(name='Server count', value="I'm in " + f'{len(bot.guilds)}' + " servers!", inline=False)
+
+    embed.add_field(name='Invite', value='[Click here](https://discord.com/oauth2/authorize?client_id=788139657711452190&scope=bot) to invite me to your server', inline=False)
+
+    await ctx.send(embed=embed)
 ### HELP COMMAND ###
 
 bot.remove_command('help')
@@ -147,11 +184,16 @@ async def help(ctx, argument: typing.Optional[str] = "None"):
 
             embed.add_field(name='_ _', value='_ _', inline=False)
 
+            embed.set_footer(text='This bot was created by 1NN0M1N473#1337', icon_url='https://i.imgur.com/SRvpDj5.jpg')
+
             await ctx.send(embed=embed)
 
     else:
 
         embed = discord.Embed(title='Barry help', description='No command found. What exactly are you trying to accomplish? Run ?help again.', color = 0xFF0000)
+
+        embed.set_footer(text='This bot was created by 1NN0M1N473#1337', icon_url='https://i.imgur.com/SRvpDj5.jpg')
+
         await ctx.send(embed=embed)
 
 

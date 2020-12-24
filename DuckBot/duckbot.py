@@ -19,7 +19,66 @@ from discord.ext import commands
 from discord.ext.commands import Bot
 from requests.exceptions import RequestException
 
-bot = commands.Bot(command_prefix='.', case_insensitive=True)
+intents = discord.Intents.default() # Enable all intents except for members and presences
+intents.members = True  # Subscribe to the privileged members intent.
+
+
+
+####################################
+
+def get_prefix(client, message):
+    with open('prefixes.json', 'r') as f:
+        prefixes = json.load(f)
+
+    return prefixes[str(message.guild.id)]
+
+## WORKS
+bot = commands.Bot(command_prefix=get_prefix, case_insensitive=True, intents=intents)
+
+
+@bot.command(aliases=["prefix_change", "set_prefix", "setprefix", "sp"], pass_context=True)
+@commands.has_permissions(administrator=True)
+async def changeprefix(ctx, *, _prefix):
+    with open('prefixes.json', 'r') as f:
+        prefixes = json.load(f)
+
+    if prefixes[str(ctx.guild.id)] != _prefix:
+
+        prefixes[str(ctx.guild.id)] = _prefix
+
+        with open('prefixes.json', 'w') as f:
+            json.dump(prefixes, f, indent=4)
+
+            await ctx.send(f"Prefix set to `{_prefix}`!")
+    else:
+        await ctx.send(f"That is already the prefix, **{ctx.author.display_name}**.")
+
+@changeprefix.error
+async def changeprefix_error(ctx, error):
+    if isinstance(error, commands.CheckFailure):
+        await ctx.message.add_reaction('🚫')
+
+@bot.event
+async def on_guild_join(guild):
+    with open('prefixes.json', 'r') as f:
+        prefixes = json.load(f)
+
+    prefixes[str(guild.id)] = "."
+
+    with open('prefixes.json', 'w') as f:
+        json.dump(prefixes, f, indent=4)
+
+
+@bot.event
+async def on_guild_remove(guild):
+    with open('prefixes.json', 'r') as f:
+        prefixes = json.load(f)
+
+    prefixes.pop(str(guild.id))
+
+    with open('prefixes.json', 'w') as f:
+        json.dump(prefixes, f, indent=4)
+
 
 #GITHUB TOKEN THINGY
 
@@ -85,6 +144,16 @@ async def on_message(message):
         await message.add_reaction('🇲')
         await message.add_reaction('🇦')
         await message.add_reaction('🇴')
+    if 'lmfao' in message.content.lower():
+        await message.add_reaction('🇱')
+        await message.add_reaction('🇲')
+        await message.add_reaction('🇫')
+        await message.add_reaction('🇦')
+        await message.add_reaction('🇴')
+    if message.guild.me in message.mentions:
+        await message.add_reaction('<:AngryPing:791053518375092354>')
+    if message.guild.owner in message.mentions:
+        await message.add_reaction('<:AngryPing:791053518375092354>')
     await bot.process_commands(message)
 
 
@@ -169,18 +238,24 @@ async def name(ctx):
 
 
 @bot.command()
-async def myid(ctx):
+async def owner(ctx):
     if ctx.message.author.id == ctx.guild.owner_id:
-        await ctx.send("{} is your id".format(ctx.message.author.id))
+        await ctx.send("{} is the owner of this server".format(ctx.message.author.mention))
     else:
-        await ctx.message.add_reaction('❌')
+        await ctx.send("{} is not the owner of this server".format(ctx.message.author.mention))
 
-######### Foo command
-# idfk why this here
+##### .s command ####
+# resends the message as the bot
 
-@bot.command()
-async def foo(ctx, arg):
-    await ctx.send(arg)
+@bot.command(aliases=['say', 'send', 'foo'])
+async def s(ctx, *, msg):
+    await ctx.message.delete()
+    await ctx.send(msg)
+
+@s.error
+async def s_error(ctx, error):
+    if isinstance(error, commands.CheckFailure):
+        await ctx.message.add_reaction('🚫')
 
 #########
 # Role color == embed color
@@ -201,48 +276,54 @@ bot.remove_command('help')
 @bot.command()
 async def help(ctx, argument: typing.Optional[str] = "None"):
 
+    with open('prefixes.json', 'r') as f:
+        prefixes = json.load(f)
+    botprefix = prefixes[str(ctx.guild.id)]
+
     if (argument == "None"):
 
-        embed = discord.Embed(title='DuckBot help', description=("Hey {}, Here is a list of arguments:".format(ctx.message.author.mention)), color = 0x6c3e82)
+        embed = discord.Embed(title='DuckBot help', description=("Hey {}, Here is a list of arguments:".format(ctx.message.author.mention)), color = ctx.me.color)
         embed.add_field(name='_ _', value='_ _', inline=False)
-        embed.add_field(name='.help commands', value='Show the list of normal commands', inline=False)
-        embed.add_field(name='.help testing', value='shows what testing commands do. This list might not be up to date.', inline=False)
-        embed.add_field(name='.help', value='Gives this message', inline=False)
+        embed.add_field(name='help commands', value='Show the list of normal commands', inline=False)
+        embed.add_field(name=(botprefix + 'help testing'), value='shows what testing commands do. This list might not be up to date.', inline=False)
+        embed.add_field(name=(botprefix + 'help'), value='Gives this message', inline=False)
         embed.add_field(name='_ _', value='_ _', inline=False)
         embed.set_footer(text='Bot by LeoCx1000#9999', icon_url='https://i.imgur.com/DTLCaur.gif')
         await ctx.send(embed=embed)
 
     if (argument == "commands"):
 
-        embed = discord.Embed(title='DuckBot help', description=("Hey {}, Here is a list of available commands:".format(ctx.message.author.mention)), color = 0x6c3e82)
+        embed = discord.Embed(title='DuckBot help', description=("Hey {}, Here is a list of available commands:".format(ctx.message.author.mention)), color = ctx.me.color)
         embed.add_field(name='_ _', value='_ _', inline=False)
-        embed.add_field(name='.dog', value='Gets a random picture of a dog', inline=False)
-        embed.add_field(name='.cat', value='Gets a random picture of a cat', inline=False)
-        embed.add_field(name='.motivateme', value='Sends an affirmation', inline=False)
-        embed.add_field(name='.inspireme', value='Returns an AI generated image from Inspirobot.me', inline=False)
-        embed.add_field(name='.ping', value="Shwos the bot's ping to the server", inline=False)
-        embed.add_field(name='.help', value='Gives a list of arguments', inline=False)
+        embed.add_field(name=(botprefix + 'dog'), value='Gets a random picture of a dog', inline=False)
+        embed.add_field(name=(botprefix + 'cat'), value='Gets a random picture of a cat', inline=False)
+        embed.add_field(name=(botprefix + 'motivateme'), value='Sends an affirmation', inline=False)
+        embed.add_field(name=(botprefix + 'inspireme'), value='Returns an AI generated image from Inspirobot.me', inline=False)
+        embed.add_field(name=(botprefix + 'ping'), value="Shwos the bot's ping to the server", inline=False)
+        embed.add_field(name=(botprefix + 'setprefix'), value='Changes the prefix of the bot', inline=False)
+        embed.add_field(name=(botprefix + 'info'), value='gives information about the bot', inline=False)
+        embed.add_field(name=(botprefix + 'help'), value='Gives a list of arguments', inline=False)
         embed.add_field(name='_ _', value='_ _', inline=False)
         embed.set_footer(text='Bot by LeoCx1000#9999', icon_url='https://i.imgur.com/DTLCaur.gif')
         await ctx.send(embed=embed)
 
     if (argument == "testing"):
 
-        embed = discord.Embed(title='DuckBot help', description=("Hey {}, Here is a list of beta/testing commands. These might not work.".format(ctx.message.author.mention)), color = 0x6c3e82)
+        embed = discord.Embed(title='DuckBot help', description=("Hey {}, Here is a list of beta/testing commands. These might not work.".format(ctx.message.author.mention)), color = ctx.me.color)
         embed.add_field(name='_ _', value='_ _', inline=False)
-        embed.add_field(name='.myid', value='Testing permissons for an owner-only command and adding reactions to the original command', inline=False)
-        embed.add_field(name='.name', value='Testing on how to send a mention', inline=False)
-        embed.add_field(name='.foo', value="Testing on how arguments work", inline=False)
-        embed.add_field(name='.embedcolor', value="Testing embed color = top role color", inline=False)
-        embed.add_field(name='.help | .help <arg>', value='Testing argument categories and optional arguments', inline=False)
-        embed.add_field(name='.help', value='Gives a list of arguments', inline=False)
+        embed.add_field(name=(botprefix + 'owner'), value='Testing permissons for an owner-only command and adding reactions to the original command', inline=False)
+        embed.add_field(name=(botprefix + 'name'), value='Testing on how to send a mention', inline=False)
+        embed.add_field(name=(botprefix + 'say'), value="Testing on how arguments work", inline=False)
+        embed.add_field(name=(botprefix + 'embedcolor'), value="Testing embed color = top role color", inline=False)
+        embed.add_field(name=(botprefix + 'help | .help <arg>'), value='Testing argument categories and optional arguments', inline=False)
+        embed.add_field(name=(botprefix + 'help'), value='Gives a list of arguments', inline=False)
         embed.add_field(name='_ _', value='_ _', inline=False)
         embed.set_footer(text='Bot by LeoCx1000#9999', icon_url='https://i.imgur.com/DTLCaur.gif')
         await ctx.send(embed=embed)
 
     if (argument != "None" and argument != "testing" and argument != "commands"):
 
-        embed = discord.Embed(title='DuckBot help', description='Incorrect argument. type `.help` for a list of available arguments', color = 0x6c3e82)
+        embed = discord.Embed(title='DuckBot help', description='Incorrect argument. type `.help` for a list of available arguments', color = ctx.me.color)
         await ctx.send(embed=embed)
 
 
@@ -269,7 +350,24 @@ async def test_error(ctx, error):
 #########################################################################
 
 
+@bot.command()
+async def info(ctx):
+    embed = discord.Embed(title='DuckBot info', description="Here's information about my bot:", color=ctx.me.color)
 
+    # give info about you here
+    embed.add_field(name='Author', value='LeoCx1000#9999', inline=False)
+
+    # Shows the number of servers the bot is member of.
+    embed.add_field(name='Server count', value="i'm in " + f'{len(bot.guilds)}' + " servers", inline=False)
+
+    # give users a link to invite this bot to their server
+    embed.add_field(name='Invite',
+        value='Invite me to your server [here](https://discord.com/api/oauth2/authorize?client_id=788278464474120202&permissions=8&scope=bot)', inline=False)
+
+    embed.add_field(name='Source code',
+        value='My source code can be found [here](https://github.com/1NN0M1N473/Discord-bots/tree/master/DuckBot). Note: it may not be up-to-date', inline=False)
+
+    await ctx.send(embed=embed)
 
 
 ####### RUN #######
