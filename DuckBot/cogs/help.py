@@ -86,6 +86,7 @@ class help(commands.Cog):
                 embed.add_field(name=(botprefix + 'load <cog>'), value='Loads a cog.', inline=False)
                 embed.add_field(name=(botprefix + 'unload <cog>'), value='Unloads a cog.', inline=False)
                 embed.add_field(name=(botprefix + 'reload <cog>'), value='Reloads a cog.', inline=False)
+                embed.add_field(name=(botprefix + 'setstatus'), value='Sets the status of the bot.', inline=False)
                 embed.add_field(name=(botprefix + 'shutdown'), value='Shuts down the bot.', inline=False)
                 embed.add_field(name='_ _', value='_ _', inline=False)
                 embed.add_field(name=('Warning'), value='You must be LeoCx1000 to run these commands.', inline=False)

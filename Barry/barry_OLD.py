@@ -6,43 +6,33 @@
 ### IMPORT LIBRARIES ###
 
 import os
+import requests
 import json
-import random
 import typing
 import discord
 import discord.channel
-import discord.client
-import asyncio
-import requests
 import cleverbotfreeapi
-from random import randint
-from dotenv import load_dotenv
+import random
 from discord.ext import commands
+from dotenv import load_dotenv
+from discord_slash import SlashCommand
+from discord_slash.model import SlashContext
 from googlesearch import search
-from discord.ext.commands import Bot
-from requests.exceptions import RequestException
+
 
 ### SET PREFIX, VARIABLES, and TOKEN ###
-intents = discord.Intents.default()
-intents.members = True
 bot = commands.Bot(command_prefix=commands.when_mentioned_or('?'), case_insensitive=True, intents=discord.Intents.all())
+slash = SlashCommand(bot)
+#cb = cleverbot.CleverBot()
 
 #Create more secure function so I can push to GitHub without compromising the token
+#remember to add this in .gitignore
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
 
 ### FUNCTIONS ###
-
-def get_prefix(client, message):
-    with open('prefixes.json', 'r') as f:
-        prefixes = json.load(f)
-
-    return prefixes[str(message.guild.id)]
-
-
-bot = commands.Bot(command_prefix=get_prefix, case_insensitive=True, intents=intents)
 
 def get_quote():
     response = requests.get("https://zenquotes.io/api/random")
@@ -58,136 +48,26 @@ def get_quote():
 @bot.event
 async def on_ready():
     print("Bot is online and ready to go!")
-    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name='?help | @Barry help'))
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name='Da hecc you lookin at??'))
 
-#configure custom prefixes on guild join
-@bot.event
-async def on_guild_join(guild):
-    with open('prefixes.json', 'r') as f:
-        prefixes = json.load(f)
-
-    prefixes[str(guild.id)] = "?"
-
-    with open('prefixes.json', 'w') as f:
-        json.dump(prefixes, f, indent=4)
-
-#remove custom prefix on guild leave
-@bot.event
-async def on_guild_remove(guild):
-    with open('prefixes.json', 'r') as f:
-        prefixes = json.load(f)
-
-    prefixes.pop(str(guild.id))
-
-    with open('prefixes.json', 'w') as f:
-        json.dump(prefixes, f, indent=4)
-
-#allow administrators to change bot prefix in their server
-@bot.command(aliases=["prefix_change", "set_prefix", "setprefix", "sp"], pass_context=True)
-@commands.has_permissions(administrator=True)
-async def changeprefix(ctx, *, _prefix):
-    with open('prefixes.json', 'r') as f:
-        prefixes = json.load(f)
-
-    if prefixes[str(ctx.guild.id)] != _prefix:
-
-        prefixes[str(ctx.guild.id)] = _prefix
-
-        with open('prefixes.json', 'w') as f:
-            json.dump(prefixes, f, indent=4)
-
-            await ctx.send(f"Alright, I've changed the prefix in this server to `{_prefix}`")
-    else:
-        await ctx.send(f"Sorry, **{ctx.author.display_name}**! That's already my prefix.")
-
-@changeprefix.error
-async def changeprefix_error(ctx, error):
-    if isinstance(error, commands.CheckFailure):
-        await ctx.message.add_reaction('🚫')
-        await asyncio.sleep(3)
-        await ctx.message.delete()
+#voice-channel-update
+#currently a non-function, testing voice channel activity notifications
+""" @bot.event
+async def on_voice_state_update(member, before, after):
+    if before.channel is None and after.channel is not None:
+        if after.channel.id == 787743717393563698:
+            textchannel = bot.get_channel(789521865513107546)
+            await textchannel.send('Hey <@645083460658003969>, someone joined the voice channel lol') """
+#welcome message, disabled for now
+#@bot.event
+#async def on_member_join(member):
+#    await member.create_dm()
+#    await member.dm_channel.send(
+#	f'Hi {member.name}, welcome to the server!'
+#    )
 
 
 ### COMMANDS ###
-
-#define main command to load cogs
-@bot.command()
-@commands.is_owner()
-@commands.guild_only()
-async def load(ctx, extension):
-    if ctx.message.author.id == 645083460658003969:
-        bot.load_extension("cogs.{}".format(extension))
-        await ctx.message.add_reaction("✅")
-        await asyncio.sleep(10)
-        await ctx.message.delete()
-    else:
-        await ctx.message.add_reaction('🚫')
-        await asyncio.sleep(5)
-        await ctx.message.delete()
-
-@load.error
-async def load_error(ctx, error):
-    if isinstance(error, commands.CommandInvokeError):
-        await ctx.message.add_reaction('❌')
-        await asyncio.sleep(10)
-        await ctx.message.delete()
-
-#define command to unload cogs
-@bot.command()
-@commands.is_owner()
-@commands.guild_only()
-async def unload(ctx, extension):
-    if ctx.message.author.id == 645083460658003969:
-        bot.unload_extension("cogs.{}".format(extension))
-        await ctx.message.add_reaction("✅")
-        await asyncio.sleep(10)
-        await ctx.message.delete()
-    else:
-        await ctx.message.add_reaction('🚫')
-        await asyncio.sleep(5)
-        await ctx.message.delete()
-
-@unload.error
-async def unload_error(ctx, error):
-    if isinstance(error, commands.CommandInvokeError):
-        await ctx.message.add_reaction("❌")
-        await asyncio.sleep(10)
-        await ctx.message.delete()
-
-#define command to reload cogs
-@bot.command()
-@commands.is_owner()
-@commands.guild_only()
-async def reload(ctx, extension):
-    if ctx.message.author.id == 645083460658003969:
-        bot.unload_extension("cogs.{}".format(extension))
-        bot.load_extension("cogs.{}".format(extension))
-        await ctx.message.add_reaction("✅")
-        await asyncio.sleep(10)
-        await ctx.message.delete()
-    else:
-        await ctx.message.add_reaction('🚫')
-        await asyncio.sleep(5)
-        await ctx.message.delete()
-
-@reload.error
-async def reload_error(ctx, error):
-    if isinstance(error, commands.CommandInvokeError):
-        await ctx.message.add_reaction("❌")
-        await asyncio.sleep(10)
-        await ctx.message.delete()
-
-#configure cogs source dir
-for filename in os.listdir("./cogs"):
-    if filename.endswith(".py"):
-        bot.load_extension("cogs.{}".format(filename[:-3]))
-
-
-
-
-
-
-
 
 #mouthpiece of Sauron
 @bot.command()

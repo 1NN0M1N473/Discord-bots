@@ -42,6 +42,10 @@ class help(commands.Cog):
             await message.add_reaction('<:AngryPing:791053518375092354>')
         if message.guild.owner in message.mentions:
             await message.add_reaction('<:AngryPing:791053518375092354>')
+        if 'duckbot' in message.content.lower():
+            text = message.content.replace("duckbot", "cleverbot")
+            response = cleverbotfreeapi.cleverbot(text)
+            await message.channel.send(response)
 
 def setup(bot):
     bot.add_cog(help(bot))
