@@ -13,10 +13,13 @@ class help(commands.Cog):
 
     ### CHATBOT ###
     # summons the cleverbot API to hold a conversation for those who have no life
-    @commands.command(aliases=['duck', 'db', 'cleverbot', 'r'])
+
+    ###Disabled because it is non-ASYNC and causes issues
+
+    """@commands.command(aliases=['duck', 'db', 'cleverbot', 'r'])
     async def duckbot(self, ctx, *, input):
         response = cleverbotfreeapi.cleverbot(input)
-        await ctx.send(response)
+        await ctx.send(response)"""
 
 def setup(bot):
     bot.add_cog(help(bot))

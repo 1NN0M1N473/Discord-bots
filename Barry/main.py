@@ -21,6 +21,12 @@ from discord.ext import commands
 from googlesearch import search
 from discord.ext.commands import Bot
 from requests.exceptions import RequestException
+from cogs.utils import checks, context, db
+from cogs.utils.config import Config
+import config
+import asyncpg
+
+
 
 ### SET PREFIX, VARIABLES, and TOKEN ###
 intents = discord.Intents.default()

@@ -48,7 +48,7 @@ def get_quote():
 @bot.event
 async def on_ready():
     print("Bot is online and ready to go!")
-    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name='Da hecc you lookin at??'))
+    await bot.change_presence(activity=discord.Activity(type=5, name='Collegiate Cyber Defense Competition'))
 
 #voice-channel-update
 #currently a non-function, testing voice channel activity notifications
@@ -84,7 +84,7 @@ async def ping(ctx):
 #nerdy quote
 @bot.command()
 async def nerdyquote(ctx):
-    responses = open('jokes.txt').read().splitlines()
+    responses = open('lib/jokes.txt').read().splitlines()
     random.seed(a=None)
     response = random.choice(responses)
     await ctx.send(response)
@@ -145,6 +145,8 @@ async def help(ctx, argument: typing.Optional[str] = "None"):
 
         embed.add_field(name='?help', value='Displays this help screen', inline=False)
 
+        embed.add_field(name='Work in Progress', value='This help screen is consistently being updated with new commands, and will change significantly when I finish integrating cogs.')
+
         embed.set_footer(text='This bot was created by 1NN0M1N473#1337', icon_url='https://i.imgur.com/SRvpDj5.jpg')
 
         embed.add_field(name='_ _', value='_ _', inline=False)
@@ -169,6 +171,8 @@ async def help(ctx, argument: typing.Optional[str] = "None"):
             embed.add_field(name='?beeattack', value="Summons a horde of angry bees, use with caution", inline=False)
 
             embed.add_field(name='?barry <say something>', value="Engage in conversation with the bot; responses not guaranteed to make sense", inline=False)
+
+            embed.add_field(name='?google <search query', value="Returns the number one Google search result for a given query. Can also use dorking parameters like site: and inurl:")
 
             embed.add_field(name='_ _', value='_ _', inline=False)
 

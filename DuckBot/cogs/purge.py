@@ -1,18 +1,5 @@
-import os
-import json
-import random
-import typing
-import discord
-import requests
-import asyncio
-import cleverbotfreeapi
-import discord.client
-import discord.channel
-from random import randint
-from dotenv import load_dotenv
+import typing, discord, asyncio
 from discord.ext import commands
-from discord.ext.commands import Bot
-from requests.exceptions import RequestException
 
 class help(commands.Cog):
 
@@ -27,11 +14,11 @@ class help(commands.Cog):
             if amount < 1000:
                 await ctx.message.delete()
                 await ctx.channel.purge(limit=amount)
+                await ctx.send("🗑 Purge completed!", delete_after = 5)
             else:
                 await ctx.message.delete()
                 await ctx.channel.purge(limit=1000)
-                await asyncio.sleep(3.5)
-                await ctx.send("**[PURGE]** Applied limited of 1000 messages", delete_after=10)
+                await ctx.send("🗑 **[ERROR]** Applied limited of 1000 messages", delete_after=10)
         else:
             await ctx.message.delete()
             await ctx.send("**[PURGE]** The argument must be a number!", delete_after = 5)

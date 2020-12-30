@@ -1,18 +1,5 @@
-import os
-import json
-import random
-import typing
 import discord
-import requests
-import asyncio
-import cleverbotfreeapi
-import discord.client
-import discord.channel
-from random import randint
-from dotenv import load_dotenv
 from discord.ext import commands
-from discord.ext.commands import Bot
-from requests.exceptions import RequestException
 
 class help(commands.Cog):
 
@@ -25,17 +12,22 @@ class help(commands.Cog):
         embed = discord.Embed(title='DuckBot info', description="Here's information about my bot:", color=ctx.me.color)
 
         # give info about you here
-        embed.add_field(name='Author', value='LeoCx1000#9999', inline=False)
+        embed.add_field(name='Author', value='LeoCx1000#9999', inline=True)
 
         # Shows the number of servers the bot is member of.
-        embed.add_field(name='Server count', value="i'm in " + f'{len(self.bot.guilds)}' + " servers", inline=False)
+        embed.add_field(name='Server count', value="i'm in " + f'{len(self.bot.guilds)}' + " servers", inline=True)
 
         # give users a link to invite this bot to their server
-        embed.add_field(name='Invite',
-            value='Invite me to your server [here](https://discord.com/api/oauth2/authorize?client_id=788278464474120202&permissions=8&scope=bot)', inline=False)
+        embed.add_field(name='Invite', value='Invite me to your server [here](https://discord.com/api/oauth2/authorize?client_id=788278464474120202&permissions=8&scope=bot)', inline=True)
 
-        embed.add_field(name='Source code',
-            value='My source code can be found [here](https://github.com/1NN0M1N473/Discord-bots/tree/master/DuckBot). Note: it may not be up-to-date', inline=False)
+        embed.add_field(name='Source code', value="[Here](https://github.com/1NN0M1N473/Discord-bots/tree/master/DuckBot)'s my sourcecode", inline=True)
+
+        embed.add_field(name='_ _', value='_ _', inline=False)
+
+        embed.add_field(name='Bug report and support:', value= """To give a suggestion and report a bug, typo or issue DM the bot.
+`due to discord's limitations, you will not get a response to this DM!`
+_ _
+For further help, or if you want to chat about a suggestion or bug, __DM the bot with a message that contains only `SUPPORT DM SENT`__ and send @LeoCx1000#9999 a DM/friend request.""", inline=False)
 
         await ctx.send(embed=embed)
 

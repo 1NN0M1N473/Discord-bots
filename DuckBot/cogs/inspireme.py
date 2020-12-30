@@ -1,17 +1,6 @@
-import os
-import json
-import random
-import typing
-import discord
-import requests
-import asyncio
-import cleverbotfreeapi
-import discord.client
-import discord.channel
+import json, random, discord, requests
 from random import randint
-from dotenv import load_dotenv
 from discord.ext import commands
-from discord.ext.commands import Bot
 from requests.exceptions import RequestException
 
 class help(commands.Cog):

@@ -1,7 +1,4 @@
-import json
-import random
-import discord
-import requests
+import json, random, discord, requests
 from random import randint
 from discord.ext import commands
 

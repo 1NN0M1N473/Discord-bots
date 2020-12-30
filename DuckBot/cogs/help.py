@@ -1,18 +1,7 @@
-import os
-import json
-import random
-import typing
-import discord
-import requests
-import asyncio
-import cleverbotfreeapi
-import discord.client
-import discord.channel
+import json, random, typing, discord, asyncio
 from random import randint
 from dotenv import load_dotenv
 from discord.ext import commands
-from discord.ext.commands import Bot
-from requests.exceptions import RequestException
 
 class help(commands.Cog):
 
@@ -23,22 +12,23 @@ class help(commands.Cog):
     @commands.command()
     async def help(self, ctx, argument: typing.Optional[str] = "None"):
 
-        with open('prefixes.json', 'r') as f:
-            prefixes = json.load(f)
-        botprefix = prefixes[str(ctx.guild.id)]
+        botprefix = '.'
 
         if (argument == "None"):
 
             embed = discord.Embed(title='DuckBot help', description=("Hey {}, Here is a list of arguments:".format(ctx.message.author.mention)), color = ctx.me.color)
             embed.add_field(name='_ _', value='_ _', inline=False)
-            embed.add_field(name='help commands', value='Show the list of normal commands', inline=False)
-            embed.add_field(name=(botprefix + 'help testing'), value='shows what testing commands do.', inline=False)
-            embed.add_field(name=(botprefix + 'help moderation'), value='shows moderation commands.', inline=False)
-            embed.add_field(name=(botprefix + 'help owner'), value='shows commands to manage the bot itself. only <@349373972103561218> can run this command.', inline=False)
-            embed.add_field(name=(botprefix + 'help'), value='Gives this message', inline=False)
+            embed.add_field(name='help commands', value='Show normal commands', inline=True)
+            embed.add_field(name=(botprefix + 'help testing'), value='shows testing/beta commands.', inline=True)
+            embed.add_field(name=(botprefix + 'help moderation'), value='shows moderation commands.', inline=True)
+            embed.add_field(name=(botprefix + 'help owner'), value=':shushing_face: its a secret.', inline=True)
+            embed.add_field(name=(botprefix + 'info'), value='Gives info about the bot, and how to get support.', inline=True)
+            embed.add_field(name=(botprefix + 'help'), value='Gives this message', inline=True)
             embed.add_field(name='_ _', value='_ _', inline=False)
             embed.set_footer(text='Bot by LeoCx1000#9999', icon_url='https://i.imgur.com/DTLCaur.gif')
-            await ctx.send(embed=embed)
+            await ctx.send(embed=embed, delete_after=100)
+            await asyncio.sleep(100)
+            await ctx.message.delete()
 
         if (argument == "commands"):
 
@@ -50,11 +40,12 @@ class help(commands.Cog):
             embed.add_field(name=(botprefix + 'inspireme'), value='Returns an AI generated image from Inspirobot.me', inline=False)
             embed.add_field(name=(botprefix + 'ping'), value="Shwos the bot's ping to the server", inline=False)
             embed.add_field(name=(botprefix + 'setprefix'), value='Changes the prefix of the bot', inline=False)
-            embed.add_field(name=(botprefix + 'info'), value='gives information about the bot', inline=False)
             embed.add_field(name=(botprefix + 'help'), value='Gives a list of arguments', inline=False)
             embed.add_field(name='_ _', value='_ _', inline=False)
             embed.set_footer(text='Bot by LeoCx1000#9999', icon_url='https://i.imgur.com/DTLCaur.gif')
-            await ctx.send(embed=embed)
+            await ctx.send(embed=embed, delete_after=100)
+            await asyncio.sleep(100)
+            await ctx.message.delete()
 
         if (argument == "testing"):
 
@@ -68,16 +59,22 @@ class help(commands.Cog):
             embed.add_field(name=(botprefix + 'help'), value='Gives a list of arguments', inline=False)
             embed.add_field(name='_ _', value='_ _', inline=False)
             embed.set_footer(text='Bot by LeoCx1000#9999', icon_url='https://i.imgur.com/DTLCaur.gif')
-            await ctx.send(embed=embed)
+            await ctx.send(embed=embed, delete_after=100)
+            await asyncio.sleep(100)
+            await ctx.message.delete()
 
         if (argument == "moderation"):
 
             embed = discord.Embed(title='DuckBot help', description=("Hey {}, Here is a list of beta/testing commands. These might not work.".format(ctx.message.author.mention)), color = ctx.me.color)
             embed.add_field(name='_ _', value='_ _', inline=False)
-            embed.add_field(name=(botprefix + 'purge'), value='Purges messages in a channel. Limit = 1000 messages. `perm requiered = manage messages`', inline=False)
+            embed.add_field(name=(botprefix + 'purge'), value='Purges messages in a channel. Limit = 1000 messages.', inline=False)
+            embed.add_field(name=(botprefix + 'kick'), value='kicks a member.', inline=False)
+            embed.add_field(name=(botprefix + 'ban'), value='bans a member.', inline=False)
             embed.add_field(name='_ _', value='_ _', inline=False)
             embed.set_footer(text='Bot by LeoCx1000#9999', icon_url='https://i.imgur.com/DTLCaur.gif')
-            await ctx.send(embed=embed)
+            await ctx.send(embed=embed, delete_after=100)
+            await asyncio.sleep(100)
+            await ctx.message.delete()
 
         if (argument == "owner"):
             if ctx.message.author.id == 349373972103561218:
@@ -92,16 +89,22 @@ class help(commands.Cog):
                 embed.add_field(name=('Warning'), value='You must be LeoCx1000 to run these commands.', inline=False)
                 embed.add_field(name='_ _', value='_ _', inline=False)
                 embed.set_footer(text='Bot by LeoCx1000#9999', icon_url='https://i.imgur.com/DTLCaur.gif')
-                await ctx.send(embed=embed)
+                await ctx.send(embed=embed, delete_after=100)
+                await asyncio.sleep(100)
+                await ctx.message.delete()
             else:
-                embed = discord.Embed(title='DuckBot error', description=("Hey {}, You need to be the creator of the bot to run these commands.".format(ctx.message.author.mention)), color = ctx.me.color)
-                embed.add_field(name='_ _', value='_ _', inline=False)
+                embed = discord.Embed(title='DuckBot error', description=("Hey {}, You are not allowed to run this command!".format(ctx.message.author.mention)), color = ctx.me.color)
                 embed.set_footer(text='Bot by LeoCx1000#9999', icon_url='https://i.imgur.com/DTLCaur.gif')
+                await ctx.send(embed=embed, delete_after=100)
+                await asyncio.sleep(100)
+                await ctx.message.delete()
 
         if (argument != "None" and argument != "testing" and argument != "commands" and argument != "moderation" and argument != "owner"):
 
             embed = discord.Embed(title='DuckBot help', description='Incorrect argument. type `.help` for a list of available arguments', color = ctx.me.color)
-            await ctx.send(embed=embed)
+            await ctx.send(embed=embed, delete_after=100)
+            await asyncio.sleep(100)
+            await ctx.message.delete()
 
 def setup(bot):
     bot.add_cog(help(bot))

@@ -1,18 +1,5 @@
-import os
-import json
-import random
-import typing
-import discord
-import requests
-import asyncio
-import cleverbotfreeapi
-import discord.client
-import discord.channel
-from random import randint
-from dotenv import load_dotenv
+import typing, discord, asyncio
 from discord.ext import commands
-from discord.ext.commands import Bot
-from requests.exceptions import RequestException
 
 class help(commands.Cog):
 
@@ -24,6 +11,8 @@ class help(commands.Cog):
     async def kick(self, ctx, member : discord.Member, *, reason: typing.Optional[str] = "No reason specified"):
         if member.top_role < ctx.author.top_role:
             if member.guild_permissions.kick_members == False:
+                await member.send(f"""**{ctx.message.author}** has kicked **you** from **{ctx.guild.name}**
+**Reason:** `{reason}`""")
                 await member.kick(reason=reason)
                 await ctx.send(f"""**{ctx.message.author}** has kicked **{member}**!
 **Reason:** `{reason}`""")
