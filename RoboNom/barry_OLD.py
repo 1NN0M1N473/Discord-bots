@@ -15,14 +15,11 @@ import cleverbotfreeapi
 import random
 from discord.ext import commands
 from dotenv import load_dotenv
-from discord_slash import SlashCommand
-from discord_slash.model import SlashContext
 from googlesearch import search
 
 
 ### SET PREFIX, VARIABLES, and TOKEN ###
-bot = commands.Bot(command_prefix=commands.when_mentioned_or('?'), case_insensitive=True, intents=discord.Intents.all())
-slash = SlashCommand(bot)
+bot = commands.Bot(command_prefix=commands.when_mentioned_or('rn?'), case_insensitive=True, intents=discord.Intents.all())
 #cb = cleverbot.CleverBot()
 
 #Create more secure function so I can push to GitHub without compromising the token
@@ -48,7 +45,7 @@ def get_quote():
 @bot.event
 async def on_ready():
     print("Bot is online and ready to go!")
-    await bot.change_presence(activity=discord.Activity(type=5, name='Collegiate Cyber Defense Competition'))
+    await bot.change_presence(activity=discord.Activity(type=5, name='The Tri-Wizard Tournament'))
 
 #voice-channel-update
 #currently a non-function, testing voice channel activity notifications
@@ -104,7 +101,7 @@ async def robonom(ctx, *, input):
 #8ball
 @bot.command(aliases=['8ball'])
 async def _8ball(ctx, *, input):
-    responses = open('lib/8ball.txt').read().splitlines()
+    responses = open('data/8ball.txt').read().splitlines()
     random.seed(a=None)
     response = random.choice(responses)
     await ctx.send(response)

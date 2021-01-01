@@ -1,125 +1,141 @@
-#########################
-######## BARRY ##########
-########################
-
-
 ### IMPORT LIBRARIES ###
-
-import cogs
 import os
+import sys
 import json
 import random
-import typing
 import discord
-import discord.channel
-import discord.client
 import asyncio
-import requests
-import cleverbotfreeapi
-from random import randint
+import typing
+import traceback
 from dotenv import load_dotenv
 from discord.ext import commands
-from googlesearch import search
 from discord.ext.commands import Bot
-from requests.exceptions import RequestException
+from discord.ext.commands import CommandNotFound, MissingRequiredArgument
+
+
+### DEFINE VARIABLES ###
+
+#prepare database, wait until I have a basic setup before trying to integrate
+#postgresql = 'postgresql://robonom:robonom@dcbots/robonom'
+
+#status_string = config.get_string("status") <-- Maybe use config to cycle through status msgs?
 
 
 
-### SET PREFIX, VARIABLES, and TOKEN ###
-intents = discord.Intents.default()
-intents.members = True
-bot = commands.Bot(command_prefix=commands.when_mentioned_or('?'), case_insensitive=True, intents=discord.Intents.all())
-
-#Create more secure function so I can push to GitHub without compromising the token
-
+### DEFINE TOKEN & PREFIX ###
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
+bot = commands.Bot(command_prefix=commands.when_mentioned_or('rn?', 'robonom '), case_insensitive=True, intents=discord.Intents.all())
+bot.remove_command("help")
+
+### COGS/EXTENSIONS ###
+
+## AUTOLOAD ##
+
+"""initial_extensions = ['cogs.help',
+                      'cogs.say',
+                      'cogs.ping',
+                      'cogs.nerdyquote',
+                      'cogs.quote',
+                      'cogs.robonom',
+                      'cogs.8ball',
+                      'cogs.google',
+                      'cogs.info',]
+"""
+initial_extensions = ['cogs.help',
+                      'cogs.google',
+                      'cogs.8ball',]
 
 
-### EVENTS ###
+if __name__ == '__main__':
+    for extension in initial_extensions:
+        bot.load_extension(extension)
 
-#startup recognition
-@bot.event
-async def on_ready():
-    print("Bot is online and ready to go!")
-    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name='?help | @Barry help'))
+## MANUAL LOAD ##
 
-### COMMANDS ###
-
-#define main command to load cogs
 @bot.command()
-@commands.is_owner()
 @commands.guild_only()
 async def load(ctx, extension):
     if ctx.message.author.id == 645083460658003969:
         bot.load_extension("cogs.{}".format(extension))
-        await ctx.message.add_reaction("✅")
-        await asyncio.sleep(10)
-        await ctx.message.delete()
-    else:
-        await ctx.message.add_reaction('🚫')
+        response = await ctx.send("Successfully loaded the specified module.")
         await asyncio.sleep(5)
         await ctx.message.delete()
-
-@load.error
-async def load_error(ctx, error):
-    if isinstance(error, commands.CommandInvokeError):
-        await ctx.message.add_reaction('❌')
-        await asyncio.sleep(10)
+        await response.delete()
+    else:
+        response = await ctx.send("You don't have permission to load modules.")
+        await asyncio.sleep(5)
         await ctx.message.delete()
+        await response.delete()
 
-#define command to unload cogs
 @bot.command()
-@commands.is_owner()
 @commands.guild_only()
 async def unload(ctx, extension):
     if ctx.message.author.id == 645083460658003969:
         bot.unload_extension("cogs.{}".format(extension))
-        await ctx.message.add_reaction("✅")
-        await asyncio.sleep(10)
-        await ctx.message.delete()
-    else:
-        await ctx.message.add_reaction('🚫')
+        response = await ctx.send("Successfully unloaded the specified module.")
         await asyncio.sleep(5)
         await ctx.message.delete()
-
-@unload.error
-async def unload_error(ctx, error):
-    if isinstance(error, commands.CommandInvokeError):
-        await ctx.message.add_reaction("❌")
-        await asyncio.sleep(10)
+        await response.delete()
+    else:
+        response = await ctx.send("You don't have permission to unload modules.")
+        await asyncio.sleep(5)
         await ctx.message.delete()
+        await response.delete()
 
-#define command to reload cogs
 @bot.command()
-@commands.is_owner()
 @commands.guild_only()
 async def reload(ctx, extension):
     if ctx.message.author.id == 645083460658003969:
         bot.unload_extension("cogs.{}".format(extension))
         bot.load_extension("cogs.{}".format(extension))
-        await ctx.message.add_reaction("✅")
-        await asyncio.sleep(10)
-        await ctx.message.delete()
-    else:
-        await ctx.message.add_reaction('🚫')
+        response = await ctx.send("Successfully reloaded the specified module.")
         await asyncio.sleep(5)
         await ctx.message.delete()
-
-@reload.error
-async def reload_error(ctx, error):
-    if isinstance(error, commands.CommandInvokeError):
-        await ctx.message.add_reaction("❌")
-        await asyncio.sleep(10)
+        await response.delete()
+    else:
+        response = await ctx.send("You don't have permission to reload modules.")
+        await asyncio.sleep(5)
         await ctx.message.delete()
+        await response.delete()
 
-#configure cogs source dir
-for filename in os.listdir("./cogs"):
-    if filename.endswith(".py"):
-        bot.load_extension("cogs.{}".format(filename[:-3]))
+### EVENTS ###
+
+## ERROR HANDLING ##
+@bot.event
+async def on_command_error(ctx, error):
+    if hasattr(ctx.command, 'on_error'):
+        return
+
+    error = getattr(error, 'original', error)
+
+    if isinstance(error, commands.ExtensionAlreadyLoaded):
+        await ctx.send("The specified module has already been loaded.")
+        return
+    if isinstance(error, commands.ExtensionNotFound):
+        await ctx.send("The specified module does not exist.")
+        return
+    if isinstance(error, commands.CommandInvokeError):
+        await ctx.send("CommandInvokeError: I might be missing permissions? Have <@645083460658003969> check the logs.")
+        return
+    if isinstance(error, commands.CommandNotFound):
+        await ctx.send("That command doesn't exist. Do rn?help commands to see the available commands.")
+        return
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.send("MissingPermissions Error: I might be missing permissions? Have <@645083460658003969> check the logs.")
+        return
+
+## ON_READY() ##
+@bot.event
+async def on_ready():
+    print(f'Bot connected as {bot.user}')
+    print(f'-----------------------------')
 
 
-### RUN BOT ###
+### COMMANDS ###
+
+
+
 
 bot.run(TOKEN, reconnect=True)
