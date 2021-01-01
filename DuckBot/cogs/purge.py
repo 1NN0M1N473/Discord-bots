@@ -11,7 +11,7 @@ class help(commands.Cog):
     async def clear(self, ctx, argument: typing.Optional[int] = "noimput"):
         amount = argument
         if amount != "noimput":
-            if amount < 1000:
+            if amount <= 1000:
                 await ctx.message.delete()
                 await ctx.channel.purge(limit=amount)
                 await ctx.send("🗑 Purge completed!", delete_after = 5)

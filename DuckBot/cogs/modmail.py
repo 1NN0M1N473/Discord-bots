@@ -15,9 +15,13 @@ class help(commands.Cog):
         if message.attachments:
             file = message.attachments[0]
             myfile = await file.to_file()
-            await channel.send(f'**<{message.author}> »** {message.content}', file=myfile)
+            embed = discord.Embed()
+            embed.add_field(name=f'**<{message.author} |** `{message.author.id}`**>**', value=f'{message.content}')
+            await channel.send(embed=embed, file=myfile)
         else:
-            await channel.send(f'**<{message.author}> »** {message.content}')
+            embed = discord.Embed()
+            embed.add_field(name=f'**<{message.author} |** `{message.author.id}`**>**', value=f'{message.content}')
+            await channel.send(embed=embed)
         await message.add_reaction('📬')
         await asyncio.sleep(2.5)
         await message.remove_reaction('📬', self.bot.user)

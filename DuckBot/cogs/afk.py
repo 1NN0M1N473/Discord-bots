@@ -22,12 +22,6 @@ class help(commands.Cog):
             await ctx.author.edit(nick=f'[AFK] {nick}')
             await ctx.send(f'{ctx.author.mention}, **You are afk**', delete_after=15)
 
-    @commands.Cog.listener()
-    async def on_message(self, message):
-        if message.author.nick.startswith("[AFK]"):
-            await message.author.edit(nick=message.author.nick.replace('[AFK] ', ''))
-            await message.channel.send(f'{message.author.mention}, **You are no longer afk**', delete_after=5)
-
 
 def setup(bot):
     bot.add_cog(help(bot))
