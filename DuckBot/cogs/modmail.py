@@ -11,13 +11,17 @@ class help(commands.Cog):
         if message.guild: return
         if message.author == self.bot.user: return
         if message.content.startswith('.'): return
-        channel = self.bot.get_channel(792309722362937344)
+        channel = self.bot.get_channel(795060599666114591)
         if message.attachments:
-            file = message.attachments[0]
-            myfile = await file.to_file()
-            embed = discord.Embed()
-            embed.add_field(name=f'**<{message.author} |** `{message.author.id}`**>**', value=f'{message.content}')
-            await channel.send(embed=embed, file=myfile)
+            embed = discord.Embed(color= 0xFF0000)
+            embed.add_field(name='⛔ ERROR ⛔', value="""Images are currently not supported in DMs.
+You can use [imgur](https://imgur.com/upload) to send a images and
+[pastebin](https://paste.gg/) to send long text files/messages!
+
+⚠ `this message wasn't delivered!` ⚠
+Remove the image/file and resend your message""")
+            await message.channel.send(embed=embed)
+            return
         else:
             embed = discord.Embed()
             embed.add_field(name=f'**<{message.author} |** `{message.author.id}`**>**', value=f'{message.content}')

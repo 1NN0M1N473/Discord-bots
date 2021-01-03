@@ -3,6 +3,7 @@ import os
 import sys
 import json
 import random
+import aiohttp
 import discord
 import asyncio
 import typing
@@ -26,26 +27,20 @@ from discord.ext.commands import CommandNotFound, MissingRequiredArgument
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
-bot = commands.Bot(command_prefix=commands.when_mentioned_or('rn?', 'robonom '), case_insensitive=True, intents=discord.Intents.all())
+bot = commands.Bot(command_prefix='rn?', case_insensitive=True, intents=discord.Intents.all())
 bot.remove_command("help")
 
 ### COGS/EXTENSIONS ###
 
 ## AUTOLOAD ##
-
-"""initial_extensions = ['cogs.help',
-                      'cogs.say',
-                      'cogs.ping',
-                      'cogs.nerdyquote',
-                      'cogs.quote',
-                      'cogs.robonom',
-                      'cogs.8ball',
-                      'cogs.google',
-                      'cogs.info',]
-"""
 initial_extensions = ['cogs.help',
                       'cogs.google',
-                      'cogs.8ball',]
+                      'cogs.8ball',
+                      'cogs.robonom',
+                      'cogs.info',
+                      'cogs.say',
+                      'cogs.nerdyquote',
+                      'cogs.ping']
 
 
 if __name__ == '__main__':
@@ -117,13 +112,13 @@ async def on_command_error(ctx, error):
         await ctx.send("The specified module does not exist.")
         return
     if isinstance(error, commands.CommandInvokeError):
-        await ctx.send("CommandInvokeError: I might be missing permissions? Have <@645083460658003969> check the logs.")
+        await ctx.send("CommandInvokeError: I might be missing permissions? Make sure I was granted all the requested permissions when added to this server.")
         return
     if isinstance(error, commands.CommandNotFound):
         await ctx.send("That command doesn't exist. Do rn?help commands to see the available commands.")
         return
     if isinstance(error, commands.MissingPermissions):
-        await ctx.send("MissingPermissions Error: I might be missing permissions? Have <@645083460658003969> check the logs.")
+        await ctx.send("MissingPermissions Error: I might be missing permissions? Make sure I was granted all the requested permissions when added to this server.")
         return
 
 ## ON_READY() ##
@@ -131,11 +126,7 @@ async def on_command_error(ctx, error):
 async def on_ready():
     print(f'Bot connected as {bot.user}')
     print(f'-----------------------------')
-
-
-### COMMANDS ###
-
-
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name='rn?help'))
 
 
 bot.run(TOKEN, reconnect=True)

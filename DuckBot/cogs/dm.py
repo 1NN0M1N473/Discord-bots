@@ -7,8 +7,7 @@ class help(commands.Cog):
         self.bot = bot
 
 
-    @commands.command(aliases=['pm'])
-    @commands.has_permissions(administrator = True)
+    @commands.command(aliases=['pm', 'md', 'message', 'direct'])
     async def dm(self, ctx, member : discord.Member, *, message = ""):
         if ctx.message.author.id == 349373972103561218:
             try:
