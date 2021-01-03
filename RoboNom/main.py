@@ -40,7 +40,8 @@ initial_extensions = ['cogs.help',
                       'cogs.info',
                       'cogs.say',
                       'cogs.nerdyquote',
-                      'cogs.ping']
+                      'cogs.ping',
+                      'cogs.modmail']
 
 
 if __name__ == '__main__':
@@ -115,7 +116,8 @@ async def on_command_error(ctx, error):
         await ctx.send("CommandInvokeError: I might be missing permissions? Make sure I was granted all the requested permissions when added to this server.")
         return
     if isinstance(error, commands.CommandNotFound):
-        await ctx.send("That command doesn't exist. Do rn?help commands to see the available commands.")
+        embed = discord.Embed(title='Command Not Found', description='That command or subcommand doesn\'t exist. Do rn?help to see the available commands.', color = 0xFF0000)
+        await ctx.send(embed=embed)
         return
     if isinstance(error, commands.MissingPermissions):
         await ctx.send("MissingPermissions Error: I might be missing permissions? Make sure I was granted all the requested permissions when added to this server.")

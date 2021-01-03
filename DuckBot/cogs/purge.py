@@ -24,7 +24,7 @@ class help(commands.Cog):
             await ctx.send("**[PURGE]** The argument must be a number!", delete_after = 5)
 
     @clear.error
-    async def clear_error(ctx, error):
+    async def clear_error(self, ctx, error):
         if isinstance(error, commands.CheckFailure):
             await ctx.message.add_reaction('🚫')
             await asyncio.sleep(3)

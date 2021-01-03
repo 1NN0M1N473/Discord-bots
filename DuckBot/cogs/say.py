@@ -12,12 +12,10 @@ class help(commands.Cog):
     @commands.command(aliases=['say', 'send', 'foo'])
     async def s(self, ctx, *, msg):
         await ctx.message.delete()
-        await ctx.send(msg)
-
-    @s.error
-    async def s_error(self, ctx, error):
-        if isinstance(error, commands.CheckFailure):
-            await ctx.message.add_reaction('🚫')
+        if ctx.channel.permissions_for(ctx.author).mention_everyone:
+            await ctx.send(msg)
+        else:
+            await ctx.send(msg, allowed_mentions = discord.AllowedMentions(everyone = False))
 
 def setup(bot):
     bot.add_cog(help(bot))
