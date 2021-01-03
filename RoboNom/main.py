@@ -3,7 +3,7 @@ import os
 import sys
 import json
 import random
-import aiohttp
+import requests
 import discord
 import asyncio
 import typing
@@ -128,5 +128,16 @@ async def on_ready():
     print(f'-----------------------------')
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name='rn?help'))
 
+### NON_COG COMMANDS ###
+def get_quote():
+    response = requests.get("https://zenquotes.io/api/random")
+    json_data = json.loads(response.text)
+    quote = json_data[0]["q"] + " -" + json_data[0]["a"]
+    return(quote)
+
+@bot.command()
+async def quote(ctx):
+    quote = get_quote()
+    await ctx.send(quote)
 
 bot.run(TOKEN, reconnect=True)
