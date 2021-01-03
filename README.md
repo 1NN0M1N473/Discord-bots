@@ -2,7 +2,7 @@
 
 -----------------------------------------
 
-## [![Join Our Discord Support Server!](https://discord.gg/CD2UfNhSev)]
+## [Join Our Discord Support Server!](https://discord.gg/CD2UfNhSev)
 
 ## - RoboNom:
 ### Created by 1NN0M1N473#1337
