@@ -1,12 +1,13 @@
-# Repository for my and Leo's discord bots
+# Official Discord Bot Repository for RoboNom & DuckBot
 
 -----------------------------------------
 
-More information to follow
+[![Join Our Support Server!](https://discord.gg/CD2UfNhSev)]
 
-RoboNom:
-Created by 1NN0M1N473#1337
+- RoboNom:
+## Created by 1NN0M1N473#1337
+[![1NN0M1N473's GitHub Stats](https://github-readme-stats.vercel.app/api?username=1NN0M1N473?count_private=true)](https://github.com/1NN0M1N473)
 
-
-DuckBot:
-Created by LeoCx1000#9999
+- DuckBot:
+## Created by LeoCx1000#9999
+[![LeoCx1000's GitHub Stats](https://github-readme-stats.vercel.app/api?username=LeoCx1000?count_private=true)](https://github.com/LeoCx1000)
