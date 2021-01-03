@@ -6,7 +6,7 @@
 
 ## - RoboNom:
 ### Created by 1NN0M1N473#1337
-[![1NN0M1N473's GitHub Stats]
+[![1NN0M1N473's GitHub Stats](https://github-readme-stats.vercel.app/api?username=1NN0M1N473&count_private=true&show_icons=true&theme=dark)](https://github.com/1NN0M1N473)
 
 ---
 
