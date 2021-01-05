@@ -6,6 +6,8 @@
 
 ## - RoboNom:
 [Invite me to your server!](https://discord.com/oauth2/authorize?client_id=788139657711452190&scope=bot)
+###
+[Bots.gg Listing](https://discord.bots.gg/bots/788139657711452190)
 ### Created by 1NN0M1N473#1337
 [![1NN0M1N473's GitHub Stats](https://github-readme-stats.vercel.app/api?username=1NN0M1N473&count_private=true&show_icons=true&theme=dark)](https://github.com/1NN0M1N473)
 
