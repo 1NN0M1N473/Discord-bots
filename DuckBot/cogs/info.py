@@ -29,7 +29,7 @@ class help(commands.Cog):
         embed.add_field(name='Bug report and support:', value= """To give a suggestion and report a bug, typo or issue DM the bot.
 `due to discord's limitations, you will not get a response to this DM!`
 _ _
-For further help, join the :sparkles:[support server](https://discord.gg/ZmQe8gbSzE):sparkles:""", inline=False)
+For further help, join the :sparkles:[support server](https://discord.gg/gRAUH8n9nV):sparkles:""", inline=False)
 
         await ctx.send(embed=embed)
 

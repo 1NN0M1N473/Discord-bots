@@ -8,10 +8,11 @@ import discord
 import asyncio
 import typing
 import traceback
+from lib.db import db
 from dotenv import load_dotenv
 from discord.ext import commands
 from discord.ext.commands import Bot
-from discord.ext.commands import CommandNotFound, MissingRequiredArgument
+from discord.ext.commands import CommandNotFound, MissingRequiredArgument, has_permissions, when_mentioned_or
 
 
 ### DEFINE VARIABLES ###
@@ -27,8 +28,11 @@ from discord.ext.commands import CommandNotFound, MissingRequiredArgument
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
-bot = commands.Bot(command_prefix='rn?', case_insensitive=True, intents=discord.Intents.all())
+PREFIX= "rn?"
+bot = commands.Bot(command_prefix=PREFIX, case_insensitive=True, intents=discord.Intents.all())
 bot.remove_command("help")
+
+
 
 ### COGS/EXTENSIONS ###
 

@@ -50,11 +50,28 @@ class help(commands.Cog):
                     await asyncio.sleep(10)
                     await ctx.message.delete()
 
-            if type != "watching" and type != "listening" and type != "playing" and type != "4afc07a4055edc68da62f18f7ecdd103":
+            if type == "competing":
+                if argument !=  "2e3af8c32eb727e22f076be964574181":
+                    #Setting `other ` status
+                    await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.competing, name=f'{argument}'))
+                    await ctx.message.add_reaction('✅')
+                    await ctx.send(f"Activity changed to `Competing in {argument}` ", delete_after=10)
+                    await asyncio.sleep(10)
+                    await ctx.message.delete()
+
+            if type == "clear":
+                await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.custom, name='cleared'))
+                await ctx.message.add_reaction('✅')
+                await ctx.send(f"Activity cleared ", delete_after=10)
+                await asyncio.sleep(10)
+                await ctx.message.delete()
+
+            if type != "watching" and type != "listening" and type != "playing" and type != "competing" and type != "clear" and type != "4afc07a4055edc68da62f18f7ecdd103":
                 embed = discord.Embed(title= "`ERROR` INVALID TYPE!", description="Here is a list of available types:", color = ctx.me.color)
                 embed.add_field(name=(botprefix + 'status Playing <status>'), value='Sets the status to Playing.', inline=False)
-                embed.add_field(name=(botprefix + 'status Listening <status>'), value='Sets the status to Listening.', inline=False)
-                embed.add_field(name=(botprefix + 'status Watching <status>'), value='Sets the status to Watching.', inline=False)
+                embed.add_field(name=(botprefix + 'status Listening <status>'), value='Sets the status to `Listening to`.', inline=False)
+                embed.add_field(name=(botprefix + 'status Watching <status>'), value='Sets the status to `Watching`.', inline=False)
+                embed.add_field(name=(botprefix + 'status Competing <status>'), value='Sets the status to `Competing in`.', inline=False)
                 await ctx.send(embed=embed, delete_after=45)
                 await asyncio.sleep(45)
                 await ctx.message.delete()

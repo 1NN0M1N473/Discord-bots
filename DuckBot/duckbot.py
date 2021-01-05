@@ -26,19 +26,31 @@ async def load(ctx, extension):
     if ctx.message.author.id == 349373972103561218:
         bot.load_extension("cogs.{}".format(extension))
         await ctx.message.add_reaction("✅")
-        await asyncio.sleep(10)
-        await ctx.message.delete()
+        await asyncio.sleep(3)
+        try:
+            await ctx.message.delete()
+        except discord.Forbidden:
+            return
+        return
     else:
         await ctx.message.add_reaction('🚫')
-        await asyncio.sleep(5)
-        await ctx.message.delete()
+        await asyncio.sleep(3)
+        try:
+            await ctx.message.delete()
+        except discord.Forbidden:
+            return
+        return
 
 @load.error
 async def load_error(ctx, error):
     if isinstance(error, commands.CommandInvokeError):
         await ctx.message.add_reaction("❌")
-        await asyncio.sleep(10)
-        await ctx.message.delete()
+        await asyncio.sleep(3)
+        try:
+            await ctx.message.delete()
+        except discord.Forbidden:
+            return
+        return
 
 @bot.command()
 @commands.guild_only()
@@ -46,19 +58,31 @@ async def unload(ctx, extension):
     if ctx.message.author.id == 349373972103561218:
         bot.unload_extension("cogs.{}".format(extension))
         await ctx.message.add_reaction("✅")
-        await asyncio.sleep(10)
-        await ctx.message.delete()
+        await asyncio.sleep(3)
+        try:
+            await ctx.message.delete()
+        except discord.Forbidden:
+            return
+        return
     else:
         await ctx.message.add_reaction('🚫')
-        await asyncio.sleep(5)
-        await ctx.message.delete()
+        await asyncio.sleep(3)
+        try:
+            await ctx.message.delete()
+        except discord.Forbidden:
+            return
+        return
 
 @unload.error
 async def unload_error(ctx, error):
     if isinstance(error, commands.CommandInvokeError):
         await ctx.message.add_reaction("❌")
-        await asyncio.sleep(10)
-        await ctx.message.delete()
+        await asyncio.sleep(3)
+        try:
+            await ctx.message.delete()
+        except discord.Forbidden:
+            return
+        return
 
 @bot.command()
 @commands.guild_only()
@@ -67,19 +91,31 @@ async def reload(ctx, extension):
         bot.unload_extension("cogs.{}".format(extension))
         bot.load_extension("cogs.{}".format(extension))
         await ctx.message.add_reaction("✅")
-        await asyncio.sleep(10)
-        await ctx.message.delete()
+        await asyncio.sleep(3)
+        try:
+            await ctx.message.delete()
+        except discord.Forbidden:
+            return
+        return
     else:
         await ctx.message.add_reaction('🚫')
-        await asyncio.sleep(5)
-        await ctx.message.delete()
+        await asyncio.sleep(3)
+        try:
+            await ctx.message.delete()
+        except discord.Forbidden:
+            return
+        return
 
 @reload.error
 async def reload_error(ctx, error):
     if isinstance(error, commands.CommandInvokeError):
         await ctx.message.add_reaction("❌")
-        await asyncio.sleep(10)
-        await ctx.message.delete()
+        await asyncio.sleep(3)
+        try:
+            await ctx.message.delete()
+        except discord.Forbidden:
+            return
+        return
 
 for filename in os.listdir("./cogs"):
     if filename.endswith(".py"):
