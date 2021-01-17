@@ -1,4 +1,4 @@
-import discord, asyncio, typing
+import typing, discord, asyncio
 from discord.ext import commands
 
 class help(commands.Cog):
@@ -6,31 +6,6 @@ class help(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.Cog.listener()
-    async def on_message(self, message):
-        if message.guild: return
-        if message.author == self.bot.user: return
-        if message.content.startswith('.'):
-            await message.channel.send('⚠ messages starting with `.` will not be sent ⚠')
-        channel = self.bot.get_channel(795060599666114591)
-        if message.attachments:
-            embed = discord.Embed(color= 0xFF0000)
-            embed.add_field(title='⛔ ERROR ⛔', value="""Images are currently not supported in DMs.
-You can use [imgur](https://imgur.com/upload) to send a images and
-[pastebin](https://paste.gg/) to send long text files/messages!
-
-⚠ `this message wasn't delivered!` ⚠
-Remove the image/file and resend your message""")
-            await message.channel.send(embed=embed)
-            return
-        else:
-            embed = discord.Embed(color=0xD7342A)
-            embed.add_field(name=f'<:incomingarrow:797567338320887858> **{message.author}**', value=f'{message.content}')
-            embed.set_footer(text=f'.dm {message.author.id}')
-            await channel.send(embed=embed)
-        await message.add_reaction('📬')
-        await asyncio.sleep(2.5)
-        await message.remove_reaction('📬', self.bot.user)
 
     @commands.command(aliases=['pm', 'md', 'message', 'direct'])
     async def dm(self, ctx, id: typing.Optional[int], *, message = ""):
@@ -51,18 +26,7 @@ Remove the image/file and resend your message""")
                 except discord.Forbidden:
                     return
                 return
-
             member = self.bot.get_user(id)
-
-            if member == None:
-                await ctx.message.add_reaction('⁉')
-                await asyncio.sleep(3)
-                try:
-                    await ctx.message.delete()
-                except discord.Forbidden:
-                    return
-                return
-
             channel = self.bot.get_channel(795060599666114591)
             try:
                 await ctx.message.delete()

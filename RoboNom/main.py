@@ -8,7 +8,6 @@ import discord
 import asyncio
 import typing
 import traceback
-from lib.db import db
 from dotenv import load_dotenv
 from discord.ext import commands
 from discord.ext.commands import Bot

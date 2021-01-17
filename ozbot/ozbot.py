@@ -4,11 +4,10 @@ from discord.ext import commands
 
 intents = discord.Intents.default() # Enable all intents except for members and presences
 intents.members = True  # Subscribe to the privileged members intent.
+intents.presences = True
 
-bot = commands.Bot(command_prefix=commands.when_mentioned_or('.', 'duck.', 'duckbot.', 'd.', 'du.', 'db.', 'Duck.', 'D.', 'Duckbot.', '*****'), case_insensitive=True, intents=intents)
+bot = commands.Bot(command_prefix=commands.when_mentioned_or('.', 'oz.', 'o.'), case_insensitive=True, intents=intents)
 
-
-bot.remove_command("help")
 bot.load_extension('jishaku')
 
 load_dotenv()
@@ -19,7 +18,9 @@ async def on_ready():
     print("======[ BOT ONLINE! ]======")
     print ("Logged in as " + bot.user.name)
     await bot.wait_until_ready()
-    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name='.help'))
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name='support DMs'))
+
+
 
 @bot.command()
 @commands.guild_only()
@@ -39,6 +40,8 @@ async def load(ctx, extension):
             await ctx.message.delete()
         except discord.Forbidden:
             return
+        except discord.NotFound:
+            return
         return
     else:
         await ctx.message.add_reaction('🚫')
@@ -46,6 +49,8 @@ async def load(ctx, extension):
         try:
             await ctx.message.delete()
         except discord.Forbidden:
+            return
+        except discord.NotFound:
             return
         return
 
@@ -59,6 +64,8 @@ async def load_error(ctx, error):
         try:
             await ctx.message.delete()
         except discord.Forbidden:
+            return
+        except discord.NotFound:
             return
         return
 
@@ -76,13 +83,16 @@ async def unload(ctx, extension):
             await ctx.message.delete()
         except discord.Forbidden:
             return
-        return
+        except discord.NotFound:
+            return
     else:
         await ctx.message.add_reaction('🚫')
         await asyncio.sleep(3)
         try:
             await ctx.message.delete()
         except discord.Forbidden:
+            return
+        except discord.NotFound:
             return
         return
 
@@ -96,6 +106,8 @@ async def unload_error(ctx, error):
         try:
             await ctx.message.delete()
         except discord.Forbidden:
+            return
+        except discord.NotFound:
             return
         return
 
@@ -121,6 +133,8 @@ async def reload(ctx, extension):
             await ctx.message.delete()
         except discord.Forbidden:
             return
+        except discord.NotFound:
+            return
         return
     else:
         await ctx.message.add_reaction('🚫')
@@ -128,6 +142,8 @@ async def reload(ctx, extension):
         try:
             await ctx.message.delete()
         except discord.Forbidden:
+            return
+        except discord.NotFound:
             return
         return
 
@@ -141,6 +157,8 @@ async def reload_error(ctx, error):
         try:
             await ctx.message.delete()
         except discord.Forbidden:
+            return
+        except discord.NotFound:
             return
         return
 
