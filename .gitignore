@@ -3,3 +3,4 @@
 .env
 Barry/.env
 DuckBot/.env
+*.json
