@@ -4,4 +4,4 @@
 Barry/.env
 DuckBot/.env
 *.json
-.pyc
+*.pyc
