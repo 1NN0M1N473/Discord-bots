@@ -42,5 +42,43 @@ Remove the image/file and resend your message""")
     async def on_member_remove(self, member):
        await self.bot.get_channel(708316690638700607).send(f"""<:outgoingarrow:800218133364867073> **{member.name}#{member.discriminator}** left **{member.guild.name}**!""")
 
+    @commands.command(aliases=['pm', 'md', 'message', 'direct'])
+    @commands.has_permissions(manage_messages=True)
+    async def dm(self, ctx, member: typing.Optional[discord.Member], *, message = ""):
+            if member == None:
+                await ctx.message.add_reaction('⁉')
+                await asyncio.sleep(5)
+                await ctx.message.delete()
+                return
+            channel = self.bot.get_channel(799741426886901850)
+            try:
+                await ctx.message.delete()
+            except discord.Forbidden:
+                pass
+            try:
+                if ctx.message.attachments:
+                    file = ctx.message.attachments[0]
+                    myfile = await file.to_file()
+                    await member.send(message, file=myfile)
+                    embed = discord.Embed(color=0x47B781)
+                    embed.add_field(name=f'<:outgoingarrow:797567337976430632> **{member.name}#{member.discriminator}**', value=message)
+                    embed.set_footer(text=f'.dm {member.id}')
+                    await channel.send(embed=embed, file=myfile)
+                else:
+                    await member.send(message)
+                    embed = discord.Embed(color=0x47B781)
+                    embed.add_field(name=f'<:outgoingarrow:797567337976430632> **{member.name}#{member.discriminator}**', value=message)
+                    embed.set_footer(text=f'.dm {member.id}')
+                    await channel.send(embed=embed)
+            except discord.Forbidden:
+                await ctx.send(f"{member}'s DMs are closed.")
+
+    @dm.error
+    async def dm_error(self, ctx, error):
+        if isinstance(error, commands.CheckFailure):
+            await ctx.message.add_reaction('🚫')
+            await asyncio.sleep (5)
+            await ctx.message.delete()
+
 def setup(bot):
     bot.add_cog(help(bot))

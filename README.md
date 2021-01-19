@@ -14,6 +14,6 @@
 ---
 
 ## - DuckBot:
-[Invite me to your server!](https://discord.com/api/oauth2/authorize?client_id=788278464474120202&permissions=8&scope=bot)
+[Invite link!](https://discord.com/api/oauth2/authorize?client_id=788278464474120202&permissions=8&scope=bot) - [Top.gg](https://top.gg/bot/788278464474120202#/) - [bots.gg](https://discord.bots.gg/bots/788278464474120202)
 ### Created by LeoCx1000#9999
 [![LeoCx1000's GitHub Stats](https://github-readme-stats.vercel.app/api?username=LeoCx1000&count_private=true&show_icons=true&theme=dark)](https://github.com/LeoCx1000)

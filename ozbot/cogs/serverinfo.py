@@ -21,7 +21,7 @@ class help(commands.Cog):
 
             act = json.loads(user.activities[0].name.replace("'", "\""))
 
-            embed.add_field(name="Cloudkeep", value=f"tps: {act['tps']} | online players: {act['pl']}", inline=False)
+            embed.add_field(name="Temporary server", value=f"tps: {act['tps']} | online players: {act['pl']}", inline=False)
 
         else:
 
@@ -29,12 +29,15 @@ class help(commands.Cog):
 
         # SKYBLOCK
 
-        user = ctx.guild.get_member(755309062555435070)
-        if user.status == discord.Status.online:
+        if ctx.channel.permissions_for(ctx.author).manage_messages:
+            if argument.lower() == "-s":
 
-            act = json.loads(user.activities[0].name.replace("'", "\""))
+                user = ctx.guild.get_member(755309062555435070)
+                if user.status == discord.Status.online:
 
-            embed.add_field(name="Skyblock", value=f"tps: {act['tps']} | online players: {act['pl']}", inline=False)
+                    act = json.loads(user.activities[0].name.replace("'", "\""))
+
+                    embed.add_field(name="Skyblock", value=f"tps: {act['tps']} | online players: {act['pl']}", inline=False)
 
         else:
 
@@ -42,12 +45,14 @@ class help(commands.Cog):
 
         # CREATIVE
 
-        user = ctx.guild.get_member(764623648132300811)
-        if user.status == discord.Status.online:
+        if ctx.channel.permissions_for(ctx.author).manage_messages:
+            if argument.lower() == "-s":
+                user = ctx.guild.get_member(764623648132300811)
+                if user.status == discord.Status.online:
 
-            act = json.loads(user.activities[0].name.replace("'", "\""))
+                    act = json.loads(user.activities[0].name.replace("'", "\""))
 
-            embed.add_field(name="Creative", value=f"tps: {act['tps']} | online players: {act['pl']}", inline=False)
+                    embed.add_field(name="Creative", value=f"tps: {act['tps']} | online players: {act['pl']}", inline=False)
 
         else:
 
@@ -57,7 +62,7 @@ class help(commands.Cog):
         # OZ
 
         if ctx.channel.permissions_for(ctx.author).manage_messages:
-            if argument.lower() != "-s":
+            if argument.lower() == "-s":
                 user = ctx.guild.get_member(799749818062077962)
                 if user.status == discord.Status.online:
 
@@ -65,7 +70,7 @@ class help(commands.Cog):
 
                     embed.add_field(name="OZ", value=f"tps: {act['tps']} | online players: {act['pl']}", inline=False)
 
-        if argument.lower() == "-s":
+        if argument.lower() != "-s":
             await ctx.send(embed=embed)
         else:
             if ctx.channel.permissions_for(ctx.author).manage_messages:
