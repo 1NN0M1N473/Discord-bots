@@ -12,25 +12,27 @@ class help(commands.Cog):
         if message.author == self.bot.user: return
         if message.content.startswith('.'):
             await message.channel.send('⚠ messages starting with `.` will not be sent ⚠')
-        channel = self.bot.get_channel(795060599666114591)
-        if message.attachments:
-            embed = discord.Embed(color= 0xFF0000)
-            embed.add_field(title='⛔ ERROR ⛔', value="""Images are currently not supported in DMs.
+            return
+        else:
+            channel = self.bot.get_channel(795060599666114591)
+            if message.attachments:
+                embed = discord.Embed(color= 0xFF0000)
+                embed.add_field(title='⛔ ERROR ⛔', value="""Images are currently not supported in DMs.
 You can use [imgur](https://imgur.com/upload) to send a images and
 [pastebin](https://paste.gg/) to send long text files/messages!
 
 ⚠ `this message wasn't delivered!` ⚠
 Remove the image/file and resend your message""")
-            await message.channel.send(embed=embed)
-            return
-        else:
-            embed = discord.Embed(color=0xD7342A)
-            embed.add_field(name=f'<:incomingarrow:797567338320887858> **{message.author}**', value=f'{message.content}')
-            embed.set_footer(text=f'.dm {message.author.id}')
-            await channel.send(embed=embed)
-        await message.add_reaction('📬')
-        await asyncio.sleep(2.5)
-        await message.remove_reaction('📬', self.bot.user)
+                await message.channel.send(embed=embed)
+                return
+            else:
+                embed = discord.Embed(color=0xD7342A)
+                embed.add_field(name=f'<:incomingarrow:797567338320887858> **{message.author}**', value=f'{message.content}')
+                embed.set_footer(text=f'.dm {message.author.id}')
+                await channel.send(embed=embed)
+            await message.add_reaction('📬')
+            await asyncio.sleep(2.5)
+            await message.remove_reaction('📬', self.bot.user)
 
     @commands.command(aliases=['pm', 'md', 'message', 'direct'])
     async def dm(self, ctx, id: typing.Optional[int], *, message = ""):

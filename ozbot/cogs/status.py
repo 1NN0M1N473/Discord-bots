@@ -9,10 +9,9 @@ class help(commands.Cog):
         # Don't question the weird numbers. Just there because they're hard to guess.
 
     @commands.command(aliases = ['setstatus', 'ss', 'activity'])
-    async def status(self, ctx, thetype: typing.Optional[str],* , argument: typing.Optional[str]):
+    async def status(self, ctx, type: typing.Optional[str],* , argument: typing.Optional[str]):
         if ctx.author.guild_permissions.administrator == True:
             botprefix = '.'
-            type = thetype.lower()
 
             if type == None:
                 embed = discord.Embed(title= "`ERROR` NO STATUS GIVEN!", description="Here is a list of available types:", color = ctx.me.color)
@@ -22,7 +21,8 @@ class help(commands.Cog):
                 await ctx.send(embed=embed, delete_after=45)
                 await asyncio.sleep(45)
                 await ctx.message.delete()
-
+            else:
+                type = type.lower()
             if type == "playing":
                 if argument !=  None:
                     # Setting `Playing ` status

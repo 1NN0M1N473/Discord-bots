@@ -109,16 +109,16 @@ class help(commands.Cog):
             except discord.Forbidden: pass
 
     @commands.command()
-    async def todo(self, ctx, *, message = ""):
+    async def todo(self, ctx, *, message = None):
         if ctx.message.author.id != 349373972103561218:
             await ctx.message.add_reaction('🚫')
             return
         channel = self.bot.get_channel(799211271542145034)
+        if message == None:
+            await ctx.message.add_reaction('⚠')
+            return
         if ctx.message.channel == channel:
             await ctx.message.delete()
-            if message == "":
-                await ctx.message.add_reaction('⚠')
-            return
         embed = discord.Embed(description=message, color=0x47B781)
         await channel.send(embed=embed)
         await ctx.message.add_reaction('✅')

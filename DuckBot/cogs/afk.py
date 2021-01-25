@@ -39,7 +39,8 @@ class help(commands.Cog):
     async def on_message(self, message):
         if ".afk" in message.content.lower(): return
         if message.author.nick == None: return
-        if message.author.nick.startswith("[AFK]"):
+        name = f'{message.author.nick}'
+        if name.startswith("[AFK] "):
             try: await message.author.edit(nick=message.author.nick.replace('[AFK] ', ''))
             except discord.Forbidden: return
             await message.channel.send(f'{message.author.mention}, **You are no longer afk**', delete_after=4)

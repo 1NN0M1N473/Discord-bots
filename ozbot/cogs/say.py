@@ -32,7 +32,6 @@ class help(commands.Cog):
             await ctx.send("""You must specify a channel
 `.announce #channel/ID Message`""")
             return
-        await ctx.message.delete()
         if channel.permissions_for(ctx.author).mention_everyone:
             if ctx.message.reference:
                 msg = ctx.message.reference.resolved.content

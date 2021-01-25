@@ -32,7 +32,7 @@ class help(commands.Cog):
         # give users a link to invite this bot to their server
         embed.add_field(name='Invite', value='Invite me to your server [here](https://discord.com/api/oauth2/authorize?client_id=788278464474120202&permissions=8&scope=bot)', inline=True)
 
-        embed.add_field(name='Source code', value="[Here](https://github.com/1NN0M1N473/Discord-bots/tree/master/DuckBot)'s my sourcecode `!!PROBABLY OUTDATED`", inline=True)
+        embed.add_field(name='Source code', value="[Here](https://github.com/1NN0M1N473/Discord-bots/tree/master/DuckBot)'s my sourcecode", inline=True)
 
         embed.add_field(name='Support server', value="[Here](https://discord.gg/vRyntc4w27)'s my support server", inline=True)
 
@@ -61,7 +61,7 @@ fields: `<obligatory>` `[optional]`""".format(ctx.message.author.mention)), colo
             embed.add_field(name=(botprefix + 'info'), value='Gives info about the bot, and how to get support.', inline=True)
             embed.add_field(name=(botprefix + 'help [argument] [page]'), value='Gives this message or the other sub-categories.', inline=True)
             embed.add_field(name=(botprefix + 'log'), value='Gives an update log', inline=True)
-            embed.add_field(name='_ _', value="""🚫 Some commands may not work due to missing permissions. i am currently working on fixing it! 🚫
+            embed.add_field(name='_ _', value="""ℹ some commands are having issues. i'm currently working on debugging them. if you run a command and it doesn't work, DM the bot with the command (use `code format` because it will not send actual commands trough the modmail!)
 
 For further help, DM the bot or join the support server found in the `.info` command""", inline=False)
             embed.set_footer(text='Bot by LeoCx1000#9999', icon_url='https://i.imgur.com/DTLCaur.gif')

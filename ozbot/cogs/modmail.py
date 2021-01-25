@@ -1,4 +1,4 @@
-import discord, asyncio
+import discord, asyncio, typing
 from discord.ext import commands
 
 class help(commands.Cog):
