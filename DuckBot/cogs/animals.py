@@ -118,6 +118,11 @@ class help(commands.Cog):
                 embed.set_footer(text='by inspirobot.me', icon_url='https://inspirobot.me/website/images/inspirobot-dark-green.png')
                 await ctx.send(embed=embed)
 
+    @commands.command()
+    async def tias(self, ctx):
+        try: await ctx.message.delete()
+        except: pass
+        await ctx.send("https://tryitands.ee/")
 
 def setup(bot):
     bot.add_cog(help(bot))

@@ -131,7 +131,7 @@ async def on_command_error(ctx, error):
 async def on_ready():
     print(f'Bot connected as {bot.user}')
     print(f'-----------------------------')
-    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name='rwATL45G0ZYw6LEqLCEsvQ=='))
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name='rn?help'))
 
 ### NON_COG COMMANDS ###
 def get_quote():

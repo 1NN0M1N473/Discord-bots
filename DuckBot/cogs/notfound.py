@@ -10,7 +10,7 @@ class help(commands.Cog):
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
         error = getattr(error, "original", error)
-        if isinstance(error, discord.ext.commands.errors.CommandNotFound):
+        if isinstance(error, discord.ext.commands.errors.CommandNotFound) or isinstance(error, discord.ext.commands.errors.CommandOnCooldown):
             return
         raise error
 

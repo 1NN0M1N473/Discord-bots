@@ -1,5 +1,6 @@
 import typing, discord, asyncio
 from discord.ext import commands
+from discord.ext.commands.cooldowns import BucketType
 
 class help(commands.Cog):
 
@@ -7,6 +8,7 @@ class help(commands.Cog):
         self.bot = bot
 
     @commands.command()
+    @commands.cooldown(1, 10.0, commands.BucketType.user)
     async def afk(self, ctx):
         nick = f'{ctx.author.nick}'
         if nick == 'None':
@@ -33,6 +35,14 @@ class help(commands.Cog):
                 await ctx.message.add_reaction('2️⃣')
                 return
             await ctx.send(f'{ctx.author.mention}, **You are afk**', delete_after=4)
+            await ctx.message.delete()
+
+    @afk.error
+    async def afk_error(self, ctx, error):
+        if isinstance(error, discord.ext.commands.errors.CommandOnCooldown):
+            err = f'{error}'
+            await ctx.send(err.replace("discord.ext.commands.errors.CommandOnCooldown:", " "), delete_after=5)
+            await asyncio.sleep (5)
             await ctx.message.delete()
 
     @commands.Cog.listener()

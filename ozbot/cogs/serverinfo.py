@@ -76,7 +76,6 @@ class help(commands.Cog):
         if isinstance(error, discord.ext.commands.errors.CommandOnCooldown):
             err = f'{error}'
             await ctx.send(err.replace("discord.ext.commands.errors.CommandOnCooldown:", " "), delete_after=5)
-            await ctx.message.add_reaction('🕔')
             await asyncio.sleep (5)
             await ctx.message.delete()
 

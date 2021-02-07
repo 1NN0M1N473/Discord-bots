@@ -10,26 +10,32 @@ class help(commands.Cog):
 
     @tasks.loop(minutes=60.0)
     async def change_color(self):
+        await self.bot.wait_until_ready()
         if datetime.datetime.now().hour == 5:
             color = random.randint(0, 0xFFFFFF)
             await self.bot.get_guild(706624339595886683).get_role(800407956323434556).edit(colour=color)
             await self.bot.get_guild(706624339595886683).get_role(800295689585819659).edit(colour=color)
             channel = self.bot.get_channel(799503231989973022)
-            embed = discord.Embed(description=f"Color of the day changed to {color}", color=color)
+            embcol = color
+            color = f'{hex(color)}'.replace('0x', '').upper()
+            embed = discord.Embed(description=f"Color of the day changed to {color}", color=embcol)
             await channel.send(embed=embed)
 
 
     @commands.command(aliases=["color", "sc"])
     @commands.has_permissions(manage_nicknames=True)
     async def cotd(self, ctx, color: typing.Optional[discord.Colour] = discord.Colour.default, tag = "-n"):
+        await self.bot.wait_until_ready()
         if tag == "-r": color = random.randint(0, 0xFFFFFF)
         await self.bot.get_guild(706624339595886683).get_role(800407956323434556).edit(colour=color)
         await self.bot.get_guild(706624339595886683).get_role(800295689585819659).edit(colour=color)
         await ctx.message.delete()
-        embed = discord.Embed(description=":sparkles:", color=color)
+        embcol = color
+        embed = discord.Embed(description=":sparkles:", color=embcol)
         await ctx.send(embed=embed, delete_after=3)
         channel = self.bot.get_channel(799503231989973022)
-        embed = discord.Embed(description=f"Daily color manually changed to {color}", color=color)
+        if tag == "-r": color = f'{hex(color)}'.replace('0x', '').upper()
+        embed = discord.Embed(description=f"Daily color manually changed to {color}", color=embcol)
         await channel.send(embed=embed)
 
 
