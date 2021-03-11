@@ -12,6 +12,7 @@ class help(commands.Cog):
         if message.author == self.bot.user: return
         if message.content.startswith('.'):
             await message.channel.send('⚠ messages starting with `.` will not be sent ⚠')
+            return
         channel = self.bot.get_channel(799741426886901850)
         if message.attachments:
             embed = discord.Embed(color= 0xFF0000)
@@ -35,9 +36,10 @@ Remove the image/file and resend your message""")
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
-       await self.bot.get_channel(706624465378738217).send(f"""{member.mention}, Welcome to {member.guild.name}! Make sure to read and agree to the <#706825075516768297> to get access to the rest of {member.guild.name}.
+        if member.guild.id != 706624339595886683: return
+        await self.bot.get_channel(706624465378738217).send(f"""{member.mention}, Welcome to {member.guild.name}! Make sure to read and agree to the <#706825075516768297> to get access to the rest of {member.guild.name}.
 To get whitelisted, run the `.whitelist YourMinecraftName` command in the <#706842001135370300> channel! """)
-       await self.bot.get_channel(708316690638700607).send(f"""<:incomingarrow:800218133225930763> **{member.name}#{member.discriminator}** joined **{member.guild.name}**!""")
+        await self.bot.get_channel(708316690638700607).send(f"""<:incomingarrow:800218133225930763> **{member.name}#{member.discriminator}** joined **{member.guild.name}**!""")
 
     @commands.Cog.listener()
     async def on_member_remove(self, member):

@@ -5,16 +5,16 @@ class help(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-
+        self.toggle = 0
         # Don't question the weird numbers. Just there because they're hard to guess.
 
     @commands.command(aliases = ['setstatus', 'ss', 'activity'])
-    async def status(self, ctx, thetype: typing.Optional[str] = "4afc07a4055edc68da62f18f7ecdd103",* , argument: typing.Optional[str] = "2e3af8c32eb727e22f076be964574181"):
+    async def status(self, ctx, thetype: typing.Optional[str] = None,* , argument: typing.Optional[str] = None):
         if ctx.message.author.id == 349373972103561218:
             botprefix = '.'
             type = thetype.lower()
 
-            if type == "4afc07a4055edc68da62f18f7ecdd103":
+            if type == None:
                 embed = discord.Embed(title= "`ERROR` NO STATUS GIVEN!", description="Here is a list of available types:", color = ctx.me.color)
                 embed.add_field(name=(botprefix + 'status Playing <status>'), value='Sets the status to Playing.', inline=False)
                 embed.add_field(name=(botprefix + 'status Listening <status>'), value='Sets the status to Listening.', inline=False)
@@ -25,7 +25,7 @@ class help(commands.Cog):
                 except discord.Forbidden: pass
 
             if type == "playing":
-                if argument !=  "2e3af8c32eb727e22f076be964574181":
+                if argument !=  None:
                     # Setting `Playing ` status
                     await self.bot.change_presence(activity=discord.Game(name=f'{argument}'))
                     await ctx.message.add_reaction('✅')
@@ -37,7 +37,7 @@ class help(commands.Cog):
                         pass
 
             if type == "listening":
-                if argument !=  "2e3af8c32eb727e22f076be964574181":
+                if argument !=  None:
                     # Setting `Listening ` status
                     await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=f'{argument}'))
                     await ctx.message.add_reaction('✅')
@@ -47,7 +47,7 @@ class help(commands.Cog):
                     except discord.Forbidden: pass
 
             if type == "watching":
-                if argument !=  "2e3af8c32eb727e22f076be964574181":
+                if argument !=  None:
                     #Setting `Watching ` status
                     await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f'{argument}'))
                     await ctx.message.add_reaction('✅')
@@ -57,7 +57,7 @@ class help(commands.Cog):
                     except discord.Forbidden: pass
 
             if type == "competing":
-                if argument !=  "2e3af8c32eb727e22f076be964574181":
+                if argument !=  None:
                     #Setting `other ` status
                     await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.competing, name=f'{argument}'))
                     await ctx.message.add_reaction('✅')
@@ -74,7 +74,7 @@ class help(commands.Cog):
                 try: await ctx.message.delete()
                 except discord.Forbidden: pass
 
-            if type != "watching" and type != "listening" and type != "playing" and type != "competing" and type != "clear" and type != "4afc07a4055edc68da62f18f7ecdd103":
+            if type != "watching" and type != "listening" and type != "playing" and type != "competing" and type != "clear" and type != None:
                 embed = discord.Embed(title= "`ERROR` INVALID TYPE!", description="Here is a list of available types:", color = ctx.me.color)
                 embed.add_field(name=(botprefix + 'status Playing <status>'), value='Sets the status to Playing.', inline=False)
                 embed.add_field(name=(botprefix + 'status Listening <status>'), value='Sets the status to `Listening to`.', inline=False)
@@ -126,9 +126,62 @@ class help(commands.Cog):
     @commands.Cog.listener()
     async def on_voice_state_update(self, member, before, after):
         if before.channel is None and after.channel is not None:
-            if after.channel.guild.id == 787743716793516062:
-                textchannel = self.bot.get_channel(788226503422902343)
-                await textchannel.send('Hey <@349373972103561218>, Someone joined a voice channel!')
+            if after.channel.id == 788853811590594572 or after.channel.id == 816312598542024745:
+                textchannel = self.bot.get_user(349373972103561218)
+                await textchannel.send(f'<:outgoingarrow:797567337976430632> {member.name} **joined** __{after.channel.name}__ in __{after.channel.guild.name}__!')
+        if before.channel is not None and after.channel is None:
+            if before.channel.id == 788853811590594572 or before.channel.id == 816312598542024745:
+                textchannel = self.bot.get_user(349373972103561218)
+                await textchannel.send(f'<:incomingarrow:797567338320887858> {member.name} **left** __{before.channel.name}__ in __{before.channel.guild.name}__!')
+
+    @commands.Cog.listener()
+    @commands.bot_has_permissions(manage_messages=True)
+    async def on_message(self, message):
+        if message.author.id != 349373972103561218: return
+        if message.guild:
+            if self.toggle == 1:
+                try: await message.delete()
+                except: return
+                if message.channel.permissions_for(message.author).mention_everyone:
+                    if message.reference:
+                        reply = message.reference.resolved
+                        await reply.reply(message.content)
+                    else:
+                        await message.channel.send(message.content)
+                else:
+                    if message.reference:
+                        reply = message.reference.resolved
+                        await reply.reply(message.content, allowed_mentions = discord.AllowedMentions(everyone = False))
+                    else:
+                        await message.channel.send(message.content, allowed_mentions = discord.AllowedMentions(everyone = False))
+                return
+            elif message.content.startswith('-'):
+                try: await message.delete()
+                except: return
+                if message.channel.permissions_for(message.author).mention_everyone:
+                    if message.reference:
+                        reply = message.reference.resolved
+                        await reply.reply(message.content[1:])
+                    else:
+                        await message.channel.send(message.content[1:])
+                else:
+                    if message.reference:
+                        reply = message.reference.resolved
+                        await reply.reply(message.content[1:], allowed_mentions = discord.AllowedMentions(everyone = False))
+                    else:
+                        await message.channel.send(message.content[1:], allowed_mentions = discord.AllowedMentions(everyone = False))
+
+        @commands.command()
+        async def ti(self, ctx):
+            if ctx.message.author.id != 349373972103561218:
+                await ctx.message.add_reaction('🚫')
+                return
+            if self.toggle == 1:
+                self.toggle = 0
+                await ctx.message.add_reaction('🔴')
+            if self.toggle == 0:
+                self.toggle = 1
+                await ctx.message.add_reaction('🟢')
 
 def setup(bot):
     bot.add_cog(help(bot))

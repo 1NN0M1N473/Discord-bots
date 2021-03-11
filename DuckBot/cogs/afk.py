@@ -45,16 +45,5 @@ class help(commands.Cog):
             await asyncio.sleep (5)
             await ctx.message.delete()
 
-    @commands.Cog.listener()
-    async def on_message(self, message):
-        if ".afk" in message.content.lower(): return
-        if message.author.nick == None: return
-        name = f'{message.author.nick}'
-        if name.startswith("[AFK] "):
-            try: await message.author.edit(nick=message.author.nick.replace('[AFK] ', ''))
-            except discord.Forbidden: return
-            await message.channel.send(f'{message.author.mention}, **You are no longer afk**', delete_after=4)
-
-
 def setup(bot):
     bot.add_cog(help(bot))

@@ -80,23 +80,7 @@ class help(commands.Cog):
             old = f'{member.name}'
         else:
             old = old
-        if ctx.guild.id == 787743716793516062:
-            try:
-                await member.edit(nick=new)
-            except discord.Forbidden:
-                await ctx.message.add_reaction('⛔')
-                return
-            except discord.HTTPException:
-                await ctx.message.add_reaction('#️⃣')
-                await ctx.message.add_reaction('3️⃣')
-                await ctx.message.add_reaction('2️⃣')
-                return
-            await ctx.message.delete()
-            channel = self.bot.get_channel(795806295197876275)
-            await channel.send(f"""__**📜 NICK LOG 📜**__ __{ctx.author.mention}__ edited __**{member}**__
-**`{old}`** -> **`{new}`**""")
-######################################################
-        elif member == ctx.author and ctx.channel.permissions_for(ctx.author).change_nickname:
+        if member == ctx.author and ctx.channel.permissions_for(ctx.author).change_nickname:
             try:
                 await member.edit(nick=new)
                 await ctx.send(f"""✏ {ctx.author.mention} nick for {member}

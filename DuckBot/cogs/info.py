@@ -65,7 +65,7 @@ fields: `<obligatory>` `[optional]`""".format(ctx.message.author.mention)), colo
 
 For further help, DM the bot or join the support server found in the `.info` command""", inline=False)
             embed.set_footer(text='Bot by LeoCx1000#9999', icon_url='https://i.imgur.com/DTLCaur.gif')
-            await ctx.send(embed=embed, delete_after=100)
+            await ctx.send(embed=embed)
             try:
                 await ctx.message.delete()
             except discord.Forbidden:
@@ -98,7 +98,7 @@ For further help, DM the bot or join the support server found in the `.info` com
                 embed.add_field(name=(botprefix + f'nick <{ctx.author.mention}> [NewNick]'), value="changes your nickname", inline=False)
 
             embed.add_field(name='_ _', value=f'Help commands | page `{number}/3`', inline=False)
-            await ctx.send(embed=embed, delete_after=100)
+            await ctx.send(embed=embed)
             try:
                 await ctx.message.delete()
             except discord.Forbidden:
@@ -113,7 +113,7 @@ For further help, DM the bot or join the support server found in the `.info` com
 
             embed.add_field(name='_ _', value='_ _', inline=False)
             embed.add_field(name='_ _', value=f'Help commands | page `{number}/1`', inline=False)
-            await ctx.send(embed=embed, delete_after=100)
+            await ctx.send(embed=embed)
             try:
                 await ctx.message.delete()
             except discord.Forbidden:
@@ -131,7 +131,7 @@ For further help, DM the bot or join the support server found in the `.info` com
                 embed.add_field(name=(botprefix + 'nick <member> [NewNick]'), value="changes a member's nickname", inline=False)
 
             embed.add_field(name='_ _', value=f'Help commands | page `{number}/1`', inline=False)
-            await ctx.send(embed=embed, delete_after=100)
+            await ctx.send(embed=embed)
             try:
                 await ctx.message.delete()
             except discord.Forbidden:
@@ -150,7 +150,7 @@ For further help, DM the bot or join the support server found in the `.info` com
                 embed.add_field(name=(botprefix + 'shutdown'), value='Shuts down the bot.', inline=False)
                 embed.add_field(name=(botprefix + 'edit <msgID> <new message> <tag>'), value="""Edits a bot't message
 **tags:** `--s` removes embed. `--d` deletes content.""", inline=False)
-                await ctx.send(embed=embed, delete_after=100)
+                await ctx.send(embed=embed)
                 try:
                     await ctx.message.delete()
                 except discord.Forbidden:
@@ -159,12 +159,12 @@ For further help, DM the bot or join the support server found in the `.info` com
             else:
                 embed = discord.Embed(title='DuckBot error', description=("Hey {}, You are not allowed to run this command!".format(ctx.message.author.mention)), color = ctx.me.color)
                 await ctx.message.delete()
-                await ctx.send(embed=embed, delete_after=100)
+                await ctx.send(embed=embed)
 
         if (argument != "None" and argument != "testing" and argument != "commands" and argument != "moderation" and argument != "owner"):
 
             embed = discord.Embed(title='DuckBot help', description='Incorrect argument. type `.help` for a list of available arguments', color = ctx.me.color)
-            await ctx.send(embed=embed, delete_after=100)
+            await ctx.send(embed=embed)
             try:
                 await ctx.message.delete()
             except discord.Forbidden:
